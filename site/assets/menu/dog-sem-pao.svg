@@ -1,0 +1,44 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d9a866"/>
+      <stop offset="100%" stop-color="#b9803f"/>
+    </linearGradient>
+    <linearGradient id="sausageGrad3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d1573a"/>
+      <stop offset="100%" stop-color="#a83726"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="222" rx="140" ry="14" fill="#000" opacity="0.14"/>
+
+  <!-- box body -->
+  <path d="M92 118 L308 118 L286 222 C286 232 250 238 200 238 C150 238 114 232 114 222 Z"
+        fill="url(#boxGrad)" stroke="#4a2e14" stroke-width="7" stroke-linejoin="round"/>
+
+  <!-- box front folds -->
+  <path d="M140 130 L128 214" stroke="#8f5b28" stroke-width="4" opacity="0.5" stroke-linecap="round"/>
+  <path d="M260 130 L272 214" stroke="#8f5b28" stroke-width="4" opacity="0.5" stroke-linecap="round"/>
+
+  <!-- sausage chunks -->
+  <g stroke="#2c150c" stroke-width="6">
+    <rect x="130" y="96" width="60" height="46" rx="23" fill="url(#sausageGrad3)"/>
+    <rect x="200" y="90" width="70" height="50" rx="25" fill="url(#sausageGrad3)"/>
+    <rect x="155" y="130" width="64" height="44" rx="22" fill="url(#sausageGrad3)"/>
+  </g>
+
+  <!-- molho drizzle -->
+  <path d="M120 108 Q145 96 170 108 Q195 120 220 108 Q245 96 270 108"
+        fill="none" stroke="#f9d020" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- cheese sauce pooling -->
+  <path d="M150 150 Q170 172 195 152 Q220 134 245 154 Q260 166 250 178 L145 178 Q138 164 150 150 Z"
+        fill="#ffe08a" stroke="#3a2210" stroke-width="5" stroke-linejoin="round" opacity="0.95"/>
+
+  <!-- corn flecks -->
+  <circle cx="150" cy="196" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="200" cy="204" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="250" cy="196" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="175" cy="210" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="225" cy="212" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+</svg>

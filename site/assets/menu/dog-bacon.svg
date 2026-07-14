@@ -1,0 +1,58 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bunGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2b95c"/>
+      <stop offset="100%" stop-color="#e0983a"/>
+    </linearGradient>
+    <linearGradient id="sausageGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d1573a"/>
+      <stop offset="100%" stop-color="#a83726"/>
+    </linearGradient>
+    <linearGradient id="baconGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e8998a"/>
+      <stop offset="55%" stop-color="#c1503d"/>
+      <stop offset="100%" stop-color="#e8998a"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="210" rx="150" ry="16" fill="#000" opacity="0.14"/>
+
+  <!-- bun boat -->
+  <path d="M55 150 C55 200 120 200 200 200 C280 200 345 200 345 150 L345 130 C345 118 335 112 322 112 L78 112 C65 112 55 118 55 130 Z"
+        fill="url(#bunGrad2)" stroke="#3a2210" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M78 130 C78 150 110 150 130 150" fill="none" stroke="#c9791f" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <path d="M270 150 C290 150 322 150 322 130" fill="none" stroke="#c9791f" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- bun end caps peeking -->
+  <ellipse cx="72" cy="118" rx="26" ry="34" fill="url(#bunGrad2)" stroke="#3a2210" stroke-width="7"/>
+  <ellipse cx="328" cy="118" rx="26" ry="34" fill="url(#bunGrad2)" stroke="#3a2210" stroke-width="7"/>
+
+  <!-- sausage -->
+  <rect x="88" y="78" width="224" height="66" rx="33" fill="url(#sausageGrad2)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="72" cy="111" rx="20" ry="33" fill="url(#sausageGrad2)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="328" cy="111" rx="20" ry="33" fill="url(#sausageGrad2)" stroke="#2c150c" stroke-width="7"/>
+
+  <!-- bacon strips crossing on top -->
+  <g stroke="#2c150c" stroke-width="20" stroke-linecap="round" fill="none">
+    <path d="M96 84 Q150 100 205 82 Q255 66 300 88" stroke="url(#baconGrad)"/>
+    <path d="M110 118 Q165 136 220 116 Q265 100 306 122" stroke="url(#baconGrad)"/>
+  </g>
+  <g stroke="#8a3324" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path d="M110 82 l6 12" /><path d="M140 92 l6 13" /><path d="M170 90 l6 13" /><path d="M200 84 l6 13" /><path d="M230 78 l6 13" /><path d="M262 80 l6 13" /><path d="M292 86 l6 13" />
+    <path d="M124 116 l6 13" /><path d="M154 128 l6 13" /><path d="M184 122 l6 13" /><path d="M214 112 l6 13" /><path d="M246 104 l6 13" /><path d="M278 108 l6 13" />
+  </g>
+
+  <!-- mustard zigzag (peeking between bacon) -->
+  <path d="M78 100 L100 112 L130 100 L160 112 L195 102 L225 114 L255 102 L285 114 L322 100"
+        fill="none" stroke="#f9d020" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+
+  <!-- cheese drips -->
+  <path d="M120 142 L128 168 L138 142 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M190 146 L198 176 L208 146 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M262 142 L270 168 L280 142 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- corn flecks -->
+  <circle cx="140" cy="176" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="230" cy="180" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="180" cy="188" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+</svg>

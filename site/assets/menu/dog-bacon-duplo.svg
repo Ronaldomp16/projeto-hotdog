@@ -1,0 +1,60 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bunGradBD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2b95c"/>
+      <stop offset="100%" stop-color="#e0983a"/>
+    </linearGradient>
+    <linearGradient id="sausageGradBD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d1573a"/>
+      <stop offset="100%" stop-color="#a83726"/>
+    </linearGradient>
+    <linearGradient id="baconGradBD" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e8998a"/>
+      <stop offset="55%" stop-color="#c1503d"/>
+      <stop offset="100%" stop-color="#e8998a"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="216" rx="160" ry="16" fill="#000" opacity="0.14"/>
+
+  <!-- bun boat -->
+  <path d="M45 156 C45 206 120 206 200 206 C280 206 355 206 355 156 L355 134 C355 122 345 116 332 116 L68 116 C55 116 45 122 45 134 Z"
+        fill="url(#bunGradBD)" stroke="#3a2210" stroke-width="7" stroke-linejoin="round"/>
+
+  <!-- bun end caps peeking -->
+  <ellipse cx="62" cy="122" rx="26" ry="34" fill="url(#bunGradBD)" stroke="#3a2210" stroke-width="7"/>
+  <ellipse cx="338" cy="122" rx="26" ry="34" fill="url(#bunGradBD)" stroke="#3a2210" stroke-width="7"/>
+
+  <!-- salsicha de tras -->
+  <rect x="80" y="66" width="240" height="56" rx="28" fill="url(#sausageGradBD)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="66" cy="94" rx="18" ry="28" fill="url(#sausageGradBD)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="334" cy="94" rx="18" ry="28" fill="url(#sausageGradBD)" stroke="#2c150c" stroke-width="7"/>
+
+  <!-- salsicha da frente -->
+  <rect x="80" y="112" width="240" height="60" rx="30" fill="url(#sausageGradBD)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="66" cy="142" rx="19" ry="30" fill="url(#sausageGradBD)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="334" cy="142" rx="19" ry="30" fill="url(#sausageGradBD)" stroke="#2c150c" stroke-width="7"/>
+
+  <!-- bacon strips crossing on top -->
+  <g stroke="#2c150c" stroke-width="18" stroke-linecap="round" fill="none">
+    <path d="M96 100 Q150 118 205 98 Q255 82 300 104" stroke="url(#baconGradBD)"/>
+    <path d="M110 134 Q165 152 220 132 Q265 116 306 138" stroke="url(#baconGradBD)"/>
+  </g>
+  <g stroke="#8a3324" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path d="M110 98 l6 12" /><path d="M140 108 l6 13" /><path d="M170 106 l6 13" /><path d="M200 100 l6 13" /><path d="M230 94 l6 13" /><path d="M262 96 l6 13" /><path d="M292 102 l6 13" />
+    <path d="M124 132 l6 13" /><path d="M154 144 l6 13" /><path d="M184 138 l6 13" /><path d="M214 128 l6 13" /><path d="M246 120 l6 13" /><path d="M278 124 l6 13" />
+  </g>
+
+  <!-- mustard zigzag peeking -->
+  <path d="M78 132 L108 148 L138 132 L168 148 L200 132 L232 148 L262 132 L292 148 L322 132"
+        fill="none" stroke="#f9d020" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+
+  <!-- cheese drips -->
+  <path d="M120 172 L128 196 L138 172 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M262 172 L270 196 L280 172 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- corn flecks -->
+  <circle cx="150" cy="188" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="200" cy="192" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="250" cy="188" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+</svg>

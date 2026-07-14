@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Comparativo visual — Dog do Quadradinho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #e8e4dc;
+  }
+  .intro {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 24px;
+    text-align: center;
+    color: #2a211c;
+  }
+  .intro h1 { font-family: 'Fredoka', sans-serif; font-size: 28px; margin: 0 0 8px; }
+  .intro p { font-size: 15px; line-height: 1.5; color: #5a5049; margin: 0; }
+  .label {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px;
+  }
+
+  /* ---------- PAINEL A: ATUAL ---------- */
+  .panel-a {
+    background: #121212;
+    color: #f5f3ee;
+    padding: 56px 24px 72px;
+  }
+  .panel-a .label { color: #a8a4ab; background: #121212; }
+  .hero-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  }
+  .pill-a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.06);
+    color: #ffb64d;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .dot-a { width: 6px; height: 6px; border-radius: 999px; background: #f4ff2a; }
+  .panel-a h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 18px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.9), 2px 2px 0 rgba(0,0,0,0.7), 3px 3px 10px rgba(0,0,0,0.35);
+  }
+  .grad-a {
+    background: linear-gradient(90deg, #f9a01b 0%, #f4ff2a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .panel-a p.sub { color: #a8a4ab; font-size: 16px; max-width: 420px; margin: 0 0 28px; }
+  @media (max-width: 800px) { .panel-a p.sub { margin-inline: auto; } }
+  .btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  @media (max-width: 800px) { .btns { justify-content: center; } }
+  .btn-a-solid {
+    background: #f9a01b;
+    color: #121212;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    box-shadow: 0 0 24px rgba(249,160,27,0.45), 0 0 60px rgba(249,160,27,0.15);
+  }
+  .btn-a-outline {
+    border: 1px solid rgba(255,255,255,0.16);
+    color: #f5f3ee;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 28px;
+    border-radius: 999px;
+  }
+  .coin-stage {
+    display: flex;
+    justify-content: center;
+    perspective: 900px;
+  }
+  .coin {
+    width: 260px;
+    height: 260px;
+    border-radius: 999px;
+    background-image: url('__LOGO__');
+    background-size: cover;
+    box-shadow: 0 0 60px rgba(249,160,27,0.35), 0 0 120px rgba(249,160,27,0.15);
+    animation: spin-coin 5.5s linear infinite;
+    transform-style: preserve-3d;
+  }
+  @keyframes spin-coin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+  .caption {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    font-size: 13px;
+    color: #8a8680;
+    text-align: center;
+  }
+  .panel-a .caption { color: #6f6b73; }
+
+  /* ---------- PAINEL B: PROPOSTA ---------- */
+  .panel-b {
+    background: #fbf5ea;
+    color: #2a211c;
+    padding: 56px 24px 72px;
+  }
+  .panel-b .label { color: #b5720a; background: #fbf5ea; }
+  .pill-b {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(249,160,27,0.16);
+    color: #b35900;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .dot-b { width: 6px; height: 6px; border-radius: 999px; background: #f9a01b; }
+  .panel-b h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.08;
+    margin: 0 0 18px;
+    color: #2a211c;
+  }
+  .accent-b { color: #b35900; }
+  .panel-b p.sub { color: #6b6058; font-size: 16px; max-width: 420px; margin: 0 0 28px; }
+  @media (max-width: 800px) { .panel-b p.sub { margin-inline: auto; } }
+  .btn-b-solid {
+    background: #f9a01b;
+    color: #2a1a05;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(249,160,27,0.35);
+  }
+  .btn-b-outline {
+    border: 1.5px solid rgba(42,33,28,0.18);
+    color: #2a211c;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 14px 28px;
+    border-radius: 999px;
+  }
+  .blob-stage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 280px;
+  }
+  .blob {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 43% 57% 61% 39% / 51% 42% 58% 49%;
+    background: linear-gradient(135deg, #ffb64d 0%, #f9a01b 100%);
+    opacity: 0.9;
+  }
+  .convoy {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    transform: translateY(6px);
+  }
+  .convoy img.car { width: 150px; filter: drop-shadow(0 14px 18px rgba(42,33,28,0.22)); margin-right: -14px; }
+  .convoy img.cart { width: 175px; filter: drop-shadow(0 14px 18px rgba(42,33,28,0.22)); }
+
+  footer {
+    text-align: center;
+    padding: 28px 24px 48px;
+    color: #6b6058;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="intro">
+    <h1>Comparativo visual</h1>
+    <p>Duas versões da hero section pra decidir a direção antes de mexer no site inteiro. Isto é uma peça de exploração — não é o site funcionando, é só pra comparar paleta, tipografia e uso de imagem.</p>
+  </div>
+
+  <div class="label">Como está hoje</div>
+  <section class="panel-a">
+    <div class="hero-grid">
+      <div>
+        <span class="pill-a"><span class="dot-a"></span> Food truck &middot; DF</span>
+        <h2>O Hot Dog que tem a <span class="grad-a">cara de Brasília</span>!</h2>
+        <p class="sub">O melhor cachorro-quente do Itapoã Parque e do Grande Colorado, feito na chapa, na hora, do seu jeito.</p>
+        <div class="btns">
+          <span class="btn-a-solid">Ver cardápio</span>
+          <span class="btn-a-outline">Contratar para eventos</span>
+        </div>
+      </div>
+      <div class="coin-stage">
+        <div class="coin"></div>
+      </div>
+    </div>
+    <p class="caption">Fundo preto, laranja/amarelo neon com brilho, moeda 3D girando (aqui simulada em CSS pra representar o efeito).</p>
+  </section>
+
+  <div class="label">Proposta</div>
+  <section class="panel-b">
+    <div class="hero-grid">
+      <div>
+        <span class="pill-b"><span class="dot-b"></span> Food truck &middot; DF</span>
+        <h2>O hot dog que <span class="accent-b">tem a cara</span> de Brasília</h2>
+        <p class="sub">O melhor cachorro-quente do Itapoã Parque e do Grande Colorado, feito na chapa, na hora, do seu jeito.</p>
+        <div class="btns">
+          <span class="btn-b-solid">Ver cardápio</span>
+          <span class="btn-b-outline">Contratar para eventos</span>
+        </div>
+      </div>
+      <div class="blob-stage">
+        <div class="blob"></div>
+        <div class="convoy">
+          <img class="car" src="__CAR__" alt="Carro" />
+          <img class="cart" src="__CART__" alt="Carrinho" />
+        </div>
+      </div>
+    </div>
+    <p class="caption">Fundo creme, o mesmo laranja da logo (sem neon), ilustrações flat que já existem no projeto (as mesmas do loading) em vez de 3D.</p>
+  </section>
+
+  <footer>Dog do Quadradinho — exploração de redesign, gerado localmente para comparação.</footer>
+
+</body>
+</html>

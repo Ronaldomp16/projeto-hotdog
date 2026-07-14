@@ -1,0 +1,16 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bottleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bfe6f2"/>
+      <stop offset="100%" stop-color="#8fcbe0"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="230" rx="62" ry="11" fill="#000" opacity="0.14"/>
+  <rect x="176" y="40" width="48" height="26" rx="8" fill="#8fcbe0" stroke="#2c5a6b" stroke-width="6"/>
+  <path d="M164 78 C164 62 176 66 176 50 L224 50 C224 66 236 62 236 78 L246 100 L246 210 C246 222 226 230 200 230 C174 230 154 222 154 210 L154 100 Z"
+        fill="url(#bottleGrad)" stroke="#2c5a6b" stroke-width="7" stroke-linejoin="round"/>
+  <rect x="164" y="128" width="72" height="56" rx="8" fill="#fff" stroke="#2c5a6b" stroke-width="5" opacity="0.9"/>
+  <path d="M176 144 Q200 132 224 144" fill="none" stroke="#8fcbe0" stroke-width="6" stroke-linecap="round"/>
+  <path d="M176 168 Q200 180 224 168" fill="none" stroke="#8fcbe0" stroke-width="6" stroke-linecap="round"/>
+  <path d="M168 96 L168 200" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+</svg>

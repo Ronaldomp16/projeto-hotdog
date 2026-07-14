@@ -1,0 +1,35 @@
+<svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff3e2"/>
+      <stop offset="100%" stop-color="#ffe0b8"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bg3)"/>
+
+  <!-- hot dog em destaque -->
+  <g transform="translate(115,70) scale(1.35)">
+    <ellipse cx="100" cy="105" rx="75" ry="8" fill="#000" opacity="0.12"/>
+    <path d="M20 70 C20 100 60 100 100 100 C140 100 180 100 180 70 L180 55 C180 46 172 41 162 41 L38 41 C28 41 20 46 20 55 Z"
+          fill="#e0983a" stroke="#3a2210" stroke-width="6" stroke-linejoin="round"/>
+    <ellipse cx="30" cy="46" rx="15" ry="20" fill="#e0983a" stroke="#3a2210" stroke-width="6"/>
+    <ellipse cx="170" cy="46" rx="15" ry="20" fill="#e0983a" stroke="#3a2210" stroke-width="6"/>
+    <rect x="42" y="26" width="116" height="36" rx="18" fill="#a83726" stroke="#2c150c" stroke-width="6"/>
+    <ellipse cx="30" cy="44" rx="11" ry="17" fill="#a83726" stroke="#2c150c" stroke-width="6"/>
+    <ellipse cx="170" cy="44" rx="11" ry="17" fill="#a83726" stroke="#2c150c" stroke-width="6"/>
+    <path d="M38 38 L58 50 L78 38 L98 50 L118 38 L138 50 L158 38"
+          fill="none" stroke="#f9d020" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- maos segurando -->
+  <path d="M40 210 Q100 180 160 208 Q140 240 100 244 Q60 240 40 210 Z" fill="#e8ac7a" stroke="#a86a3f" stroke-width="3"/>
+  <path d="M240 210 Q300 180 360 208 Q340 240 300 244 Q260 240 240 210 Z" fill="#c9895a" stroke="#8a5b34" stroke-width="3"/>
+
+  <!-- confete comemorativo -->
+  <g fill="#e67014">
+    <circle cx="60" cy="40" r="5"/><circle cx="340" cy="60" r="5"/><circle cx="300" cy="30" r="4"/>
+  </g>
+  <g fill="#8b3fd1">
+    <circle cx="90" cy="20" r="4"/><circle cx="320" cy="90" r="4"/>
+  </g>
+</svg>

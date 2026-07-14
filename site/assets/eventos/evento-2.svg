@@ -1,0 +1,41 @@
+<svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fd3f4"/>
+      <stop offset="100%" stop-color="#f4e9c9"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#sky2)"/>
+  <rect y="220" width="400" height="60" fill="#d8c9a3"/>
+
+  <!-- bandeirolas -->
+  <path d="M0 26 Q200 -4 400 26" fill="none" stroke="#8a7458" stroke-width="2"/>
+  <g>
+    <path d="M40 24 l14 20 l14 -20 Z" fill="#e67014"/>
+    <path d="M110 20 l14 20 l14 -20 Z" fill="#8b3fd1"/>
+    <path d="M180 17 l14 20 l14 -20 Z" fill="#f4ff2a"/>
+    <path d="M250 18 l14 20 l14 -20 Z" fill="#e67014"/>
+    <path d="M320 22 l14 20 l14 -20 Z" fill="#8b3fd1"/>
+  </g>
+
+  <!-- multidao -->
+  <g>
+    <g transform="translate(40,178)"><circle cx="0" cy="0" r="9" fill="#3a2a20"/><rect x="-10" y="8" width="20" height="26" rx="8" fill="#e67014"/></g>
+    <g transform="translate(70,184)"><circle cx="0" cy="0" r="9" fill="#5a3a28"/><rect x="-10" y="8" width="20" height="26" rx="8" fill="#8b3fd1"/></g>
+    <g transform="translate(100,180)"><circle cx="0" cy="0" r="9" fill="#3a2a20"/><rect x="-10" y="8" width="20" height="26" rx="8" fill="#2b1c10"/></g>
+    <g transform="translate(255,182)"><circle cx="0" cy="0" r="9" fill="#4a3020"/><rect x="-10" y="8" width="20" height="26" rx="8" fill="#df9b4d"/></g>
+    <g transform="translate(285,177)"><circle cx="0" cy="0" r="9" fill="#5a3a28"/><rect x="-10" y="8" width="20" height="26" rx="8" fill="#e67014"/></g>
+    <g transform="translate(315,183)"><circle cx="0" cy="0" r="9" fill="#3a2a20"/><rect x="-10" y="8" width="20" height="26" rx="8" fill="#6b5c4f"/></g>
+  </g>
+
+  <!-- food truck -->
+  <g transform="translate(140,120)">
+    <rect x="0" y="0" width="120" height="58" rx="5" fill="#e67014" stroke="#0e0808" stroke-width="3"/>
+    <path d="M14 0 L106 0 L114 -10 L6 -10 Z" fill="#2b1c10" stroke="#0e0808" stroke-width="3"/>
+    <rect x="18" y="10" width="60" height="30" fill="#fff8f0" opacity="0.9"/>
+    <circle cx="24" cy="62" r="9" fill="#171310" stroke="#0e0808" stroke-width="2"/>
+    <circle cx="96" cy="62" r="9" fill="#171310" stroke="#0e0808" stroke-width="2"/>
+  </g>
+
+  <ellipse cx="200" cy="222" rx="170" ry="8" fill="#000" opacity="0.15"/>
+</svg>

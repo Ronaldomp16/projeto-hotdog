@@ -1,0 +1,1841 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dog do Quadradinho, o hot dog artesanal que tem a cara de Brasília</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #e67014;
+    --orange-dark: #c25c0b;
+    --tan: #df9b4d;
+    --acai: #8b3fd1;
+    --acai-soft: #b678f2;
+    --acai-dark-bg: #5a2c8f;
+    --acai-line: #e3d2f0;
+    --ink: #2b1c10;
+    --mute: #6b5c4f;
+    --cream: #fff8f0;
+    --line: #f0ddc8;
+    --cursor-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><g transform='rotate(-18 20 20)'><rect x='6' y='16' width='28' height='10' rx='5' fill='%23e0983a' stroke='%233a2210' stroke-width='1.6'/><rect x='9' y='12' width='22' height='9' rx='4.5' fill='%23c1503d' stroke='%232c150c' stroke-width='1.6'/><path d='M11 16 L15 19 L19 16 L23 19 L27 16 L31 19' stroke='%23f9d020' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></g></svg>");
+    --cursor-dog: var(--cursor-svg) 6 6, pointer;
+    --cursor-dog-auto: var(--cursor-svg) 6 6, auto;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+    cursor: var(--cursor-dog-auto);
+  }
+  input, textarea { cursor: text; }
+
+  /* no mobile não existe cursor de verdade, então o hot dog aparece
+     "brotando" no ponto onde o dedo toca a tela, e some em seguida */
+  .tap-hotdog {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+    pointer-events: none;
+    z-index: 500;
+    opacity: 0;
+    animation: tap-hotdog-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .tap-hotdog svg { width: 100%; height: 100%; }
+  @keyframes tap-hotdog-pop {
+    0%   { opacity: 0; transform: scale(0.3); }
+    30%  { opacity: 1; transform: scale(1.15); }
+    60%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
+  }
+
+  h1, h2, h3, .font-display { font-family: 'Fredoka', sans-serif; }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 72px 0; }
+  .section-title {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 12px;
+  }
+  .section-sub {
+    text-align: center;
+    color: var(--mute);
+    font-size: 15px;
+    max-width: 560px;
+    margin: 0 auto 44px;
+    line-height: 1.6;
+  }
+
+  /* títulos de seção: por padrão sempre visíveis (se o JS falhar, o texto
+     nunca some); só quando o JS adiciona ".pop-ready" é que ele parte
+     escondido pra "estourar" (pop) ao entrar na tela */
+  .section-title.pop-ready {
+    opacity: 0;
+    transform: scale(0.8) translateY(16px);
+    transition: opacity 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .section-title.pop-in { opacity: 1; transform: scale(1) translateY(0); }
+
+  /* ---------------- HEADER ---------------- */
+  header {
+    position: relative;
+    background: #121212;
+    padding: 12px 14px;
+  }
+  .header-row {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  header img.logo {
+    height: 38px;
+    width: 38px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    border: 2px dashed var(--orange);
+    padding: 2px;
+    box-sizing: border-box;
+  }
+  header nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    min-width: 0;
+    overflow-x: auto;
+  }
+  header nav a {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.92;
+    padding: 4px 1px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+  header nav a:hover { opacity: 1; border-color: #fff; }
+  @media (min-width: 480px) {
+    header { padding: 16px 24px; }
+    header img.logo { height: 56px; width: 56px; }
+    header nav { gap: 22px; }
+    header nav a { font-size: 14px; }
+  }
+
+  /* ---------------- INTRO (logo girando feito moeda) ---------------- */
+  .intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 800px;
+    transition: opacity 0.45s ease;
+  }
+  .intro-overlay.intro-hide { opacity: 0; pointer-events: none; }
+  .intro-logo {
+    width: 132px;
+    height: 132px;
+    border-radius: 999px;
+    border: 3px dashed var(--orange);
+    padding: 3px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform-style: preserve-3d;
+    animation: coin-spin 1.1s cubic-bezier(0.45, 0.05, 0.55, 0.95) 1 both;
+  }
+  @keyframes coin-spin {
+    0%   { opacity: 0; transform: rotateY(0deg) scale(0.55); }
+    18%  { opacity: 1; }
+    100% { opacity: 1; transform: rotateY(360deg) scale(1); }
+  }
+  .intro-logo.intro-fly {
+    animation: none;
+    opacity: 1;
+    transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    position: relative;
+    background: var(--orange);
+    color: #fff;
+    text-align: center;
+    padding: 56px 24px 84px;
+    overflow: hidden;
+  }
+  .hero-sprouts {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sprout {
+    position: absolute;
+    width: 70px;
+    opacity: 0;
+    filter: brightness(0) invert(1);
+    transform: translateY(22px) scale(0.3) rotate(var(--rot, 0deg));
+    transform-origin: center;
+    animation: sprout-pop 4.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes sprout-pop {
+    0%   { opacity: 0;             transform: translateY(26px) scale(0.3)  rotate(var(--rot, 0deg)); }
+    12%  { opacity: var(--op, 0.5); transform: translateY(-4px) scale(1.08) rotate(var(--rot, 0deg)); }
+    18%  { opacity: var(--op, 0.5); transform: translateY(0)    scale(1)   rotate(var(--rot, 0deg)); }
+    80%  { opacity: var(--op, 0.5); transform: translateY(0)    scale(1)   rotate(var(--rot, 0deg)); }
+    92%  { opacity: 0;             transform: translateY(20px) scale(0.35) rotate(var(--rot, 0deg)); }
+    100% { opacity: 0;             transform: translateY(26px) scale(0.3)  rotate(var(--rot, 0deg)); }
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero h1 {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 720px;
+    margin: 0 auto 30px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+  @media (min-width: 640px) { .hero h1 { font-size: 42px; } }
+  br.mob-brk { display: none; }
+  @media (max-width: 480px) { br.mob-brk { display: block; } }
+  @media (max-width: 340px) {
+    .unidades .section-title { font-size: 27px; white-space: nowrap; }
+  }
+  .btn-hero {
+    display: inline-block;
+    background: #fff;
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 16px 36px;
+    border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .btn-hero:hover { transform: translateY(-2px); }
+
+  /* ---------------- DIFERENCIAIS ---------------- */
+  .pillars {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: 1fr;
+    margin-bottom: 40px;
+  }
+  @media (min-width: 760px) { .pillars { grid-template-columns: repeat(3, 1fr); } }
+  .pillar {
+    perspective: 1200px;
+    height: 200px;
+    cursor: var(--cursor-dog);
+  }
+  .pillar-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.15, 1);
+    transform-style: preserve-3d;
+  }
+  .pillar.flipped .pillar-inner { transform: rotateY(180deg); }
+  .pillar-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .pillar-front {
+    border: 1px solid var(--line);
+    background: var(--cream);
+  }
+  .pillar-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: #fff;
+    box-shadow: 0 10px 26px rgba(230,112,20,0.28);
+  }
+  .pillar .icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    border: 2px solid var(--orange);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 12px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  .pillar .icon img { width: 100%; height: 100%; object-fit: contain; }
+  .pillar h3 { font-size: 16.5px; font-weight: 600; margin: 0; }
+  .pillar-front .flip-hint {
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--orange-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .pillar-back p { font-size: 14.5px; line-height: 1.6; font-weight: 600; margin: 0; }
+
+  .callout {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 22px 28px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15.5px;
+    max-width: 720px;
+    margin: 0 auto;
+    box-shadow: 0 12px 30px rgba(230,112,20,0.28);
+  }
+
+  /* ---------------- CARDAPIO CAROUSEL ---------------- */
+  .carousel-shell { position: relative; }
+  .carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 6px 6px 18px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .carousel::-webkit-scrollbar { display: none; height: 0; }
+  .dish-card {
+    scroll-snap-align: start;
+    flex: 0 0 260px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 18px;
+    background: var(--cream);
+  }
+  .dish-card .img-box {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .dish-card .img-box img { height: 100%; width: 100%; object-fit: contain; transition: opacity 0.25s ease; }
+  .dish-card h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 6px; }
+
+  @keyframes dish-hop {
+    0%, 100% { transform: translateY(0) scaleX(1) scaleY(1); }
+    15%      { transform: translateY(3px) scaleX(1.06) scaleY(0.93); }
+    45%      { transform: translateY(-18px) scaleX(0.95) scaleY(1.06); }
+    70%      { transform: translateY(0) scaleX(1.05) scaleY(0.96); }
+  }
+  @keyframes dish-sway {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25%      { transform: translateX(-14px) rotate(-7deg); }
+    50%      { transform: translateX(0) rotate(0deg); }
+    75%      { transform: translateX(14px) rotate(7deg); }
+  }
+  #carousel .dish-card:nth-child(1) .img-box img { animation: dish-hop 1.9s ease-in-out infinite; }
+  #carousel .dish-card:nth-child(2) .img-box img { animation: dish-sway 2.3s ease-in-out infinite; animation-delay: 0.25s; }
+  #carousel .dish-card:nth-child(3) .img-box img { animation: dish-hop 1.9s ease-in-out infinite; animation-delay: 0.6s; }
+  #carousel .dish-card:nth-child(4) .img-box img { animation: dish-hop 1.9s ease-in-out infinite; animation-delay: 0.9s; }
+  .dish-card p.desc { font-size: 12.5px; color: var(--mute); line-height: 1.5; min-height: 52px; margin: 0 0 12px; }
+  .dish-card .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .price { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; }
+
+  .carousel-arrows { display: flex; justify-content: center; gap: 10px; margin-top: 4px; }
+  .arrow-btn {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: var(--cursor-dog);
+    font-size: 16px;
+    color: var(--orange);
+  }
+  .arrow-btn:hover { border-color: var(--orange); }
+
+  .dish-card .add-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: none;
+    cursor: var(--cursor-dog);
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-add:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .btn-add.is-added { background: var(--acai); }
+  .btn-link-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--acai);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: var(--cursor-dog);
+  }
+
+  /* ---------------- BEBIDAS ---------------- */
+  .bebidas-block { margin-top: 34px; }
+  .bebidas-title { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
+  .bebidas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 560px) { .bebidas-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .bebidas-grid { grid-template-columns: repeat(4, 1fr); } }
+  .bebida-card {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 14px;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+  }
+  .bebida-card .img-box {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .bebida-card .img-box img { height: 100%; width: 100%; object-fit: contain; transform-origin: 50% 90%; }
+
+  @keyframes drink-fizz {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    20%      { transform: translateY(-3px) rotate(-3deg); }
+    40%      { transform: translateY(0) rotate(3deg); }
+    60%      { transform: translateY(-4px) rotate(-2deg); }
+    80%      { transform: translateY(0) rotate(2deg); }
+  }
+  @keyframes drink-tilt {
+    0%, 100% { transform: rotate(0deg); }
+    50%      { transform: rotate(11deg); }
+  }
+  @keyframes drink-wobble {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-11px) rotate(-6deg); }
+  }
+  @keyframes drink-pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.1); }
+  }
+  .bebidas-grid .bebida-card:nth-child(1) .img-box img { animation: drink-fizz 1.4s ease-in-out infinite; }
+  .bebidas-grid .bebida-card:nth-child(2) .img-box img { animation: drink-tilt 1.8s ease-in-out infinite; animation-delay: 0.2s; }
+  .bebidas-grid .bebida-card:nth-child(3) .img-box img { animation: drink-wobble 2s ease-in-out infinite; animation-delay: 0.4s; }
+  .bebidas-grid .bebida-card:nth-child(4) .img-box img { animation: drink-pulse 1.6s ease-in-out infinite; animation-delay: 0.6s; }
+  .bebida-card h4 { font-size: 14.5px; font-weight: 600; margin: 0 0 4px; }
+  .bebida-card p.desc { font-size: 11.5px; color: var(--mute); line-height: 1.45; min-height: 32px; margin: 0 0 10px; }
+  .bebida-card .add-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+
+  /* ---------------- CART ---------------- */
+  .social-float {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 250;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .social-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px solid var(--orange);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .social-btn:hover { transform: translateY(-2px) scale(1.05); background: var(--cream); }
+  .social-cart {
+    position: relative;
+    background: var(--orange);
+    border: none;
+    cursor: var(--cursor-dog);
+    opacity: 0;
+    transform: translateY(10px) scale(0.85);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .social-cart.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  .social-cart .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--orange-dark);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid #fff;
+  }
+
+  .cart-trigger {
+    position: relative;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    border: 2px dashed var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: var(--cursor-dog);
+    color: #fff;
+  }
+  @media (min-width: 480px) { .cart-trigger { width: 42px; height: 42px; border-width: 2.5px; } }
+  .cart-trigger .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid #121212;
+  }
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: auto; }
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    z-index: 301;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .cart-head h3 { margin: 0; font-size: 17px; font-weight: 600; font-family: 'Fredoka', sans-serif; }
+  .cart-close { background: none; border: none; font-size: 22px; line-height: 1; cursor: var(--cursor-dog); color: var(--mute); }
+  .cart-body { flex: 1; overflow-y: auto; padding: 18px 22px; }
+  .cart-empty { text-align: center; color: var(--mute); font-size: 13.5px; margin-top: 44px; }
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cart-item .name { font-weight: 600; font-size: 13.5px; }
+  .cart-item .qty-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .qty-btn {
+    width: 24px; height: 24px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    cursor: var(--cursor-dog);
+    font-size: 14px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .qty-btn:hover { border-color: var(--orange); }
+  .cart-item .line-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+  .cart-item .line-price { font-weight: 700; font-size: 13.5px; white-space: nowrap; }
+  .cart-remove { background: none; border: none; color: var(--mute); font-size: 17px; cursor: var(--cursor-dog); line-height: 1; }
+  .cart-remove:hover { color: var(--orange-dark); }
+  .cart-foot { border-top: 1px solid var(--line); padding: 16px 22px 20px; flex-shrink: 0; }
+  .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; font-size: 13.5px; color: var(--mute); }
+  .cart-total-row b { font-family: 'Fredoka', sans-serif; font-size: 20px; color: var(--ink); }
+  .cart-form label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--mute); margin-bottom: 6px; }
+  .cart-form input, .cart-form textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-family: inherit;
+    margin-bottom: 14px;
+    resize: none;
+    color: var(--ink);
+  }
+  .cart-form input:focus, .cart-form textarea:focus { outline: none; border-color: var(--orange); }
+  .cart-form input.err, .cart-form textarea.err { border-color: #d33838; }
+  .cart-err-msg { font-size: 11px; color: #d33838; margin: -10px 0 12px; }
+  .cart-btn-primary {
+    width: 100%;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    border-radius: 999px;
+    padding: 13px;
+    font-size: 14px;
+    cursor: var(--cursor-dog);
+  }
+  .cart-btn-primary:hover { background: var(--orange-dark); }
+  .cart-btn-secondary {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 13px 18px;
+    font-size: 13.5px;
+    cursor: var(--cursor-dog);
+    white-space: nowrap;
+  }
+  .cart-btns-row { display: flex; gap: 10px; }
+  .cart-btns-row .cart-btn-primary { flex: 1; }
+  .cart-success { text-align: center; margin-top: 40px; }
+  .cart-success .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px; height: 56px;
+    border-radius: 999px;
+    background: rgba(139,63,209,0.12);
+    font-size: 26px;
+    margin: 0 auto 16px;
+  }
+  .cart-success p { font-size: 13.5px; color: var(--mute); line-height: 1.6; }
+
+  /* ---------------- ACAI ---------------- */
+  .acai-section { position: relative; overflow: hidden; }
+  .acai-section > .wrap { position: relative; z-index: 1; }
+  .acai-sprouts {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .acai-sprout {
+    position: absolute;
+    width: 70px;
+    opacity: 0;
+    transform: translateY(22px) scale(0.3) rotate(var(--rot, 0deg));
+    transform-origin: center;
+    animation: sprout-pop 4.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  /* o acai-box tem fundo branco opaco por cima, então qualquer açaí
+     decorativo que caia atrás dele fica naturalmente escondido — só
+     aparecem na parte roxa ao redor */
+  .acai-box {
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--acai-line);
+    border-radius: 24px;
+    padding: 20px;
+    background: #fff;
+  }
+  @media (min-width: 480px) { .acai-box { padding: 32px; } }
+  .acai-sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 22px 0 10px; }
+  @media (min-width: 480px) { .acai-sizes { gap: 14px; } .acai-size { padding: 14px 22px; } }
+  .acai-size {
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1.5px solid var(--acai-line);
+    min-width: 0;
+    cursor: var(--cursor-dog);
+    font-family: inherit;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .acai-size:hover { border-color: var(--acai-soft); }
+  .acai-size.selected { border-color: var(--acai); background: rgba(139,63,209,0.06); }
+  .acai-size b { display: block; font-family: 'Fredoka', sans-serif; font-size: 17px; color: var(--acai); }
+  .acai-size span { font-size: 12px; color: var(--mute); }
+  .acai-size em { display: block; font-style: normal; font-size: 10.5px; color: var(--acai-soft); margin-top: 2px; }
+
+  .acai-extras-counter {
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--mute);
+    margin: 0 0 22px;
+    transition: color 0.2s;
+  }
+  .acai-extras-counter.is-full { color: var(--acai); }
+
+  .chip.chip-disabled { opacity: 0.4; cursor: not-allowed; }
+  .chip.shake { animation: chip-shake 0.4s ease; }
+  @keyframes chip-shake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-4px); }
+    75%      { transform: translateX(4px); }
+  }
+  .acai-add-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--acai-line);
+  }
+  .btn-add-acai {
+    background: var(--acai);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: var(--cursor-dog);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-add-acai:hover { background: #6f2fac; transform: translateY(-1px); }
+  .btn-add-acai.is-added { background: var(--orange); }
+  .acai-cols { display: grid; gap: 26px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .acai-cols { grid-template-columns: 1fr 1fr; } }
+  .acai-cols h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--acai);
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  .chip-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    background: #fff;
+    border: 1px solid var(--acai-line);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12.5px;
+    color: var(--ink);
+    font-family: inherit;
+    cursor: var(--cursor-dog);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .chip:hover { border-color: var(--acai-soft); }
+  .chip.selected {
+    border-color: var(--acai);
+    background: var(--acai);
+    color: #fff;
+    font-weight: 600;
+  }
+  .chip.selected::before { content: '✓'; font-size: 11px; }
+  .chip-hint { font-size: 10.5px; text-transform: none; letter-spacing: normal; color: var(--mute); font-weight: 500; }
+
+  /* logo do açaí "mexendo a tigela" em loop continuo */
+  .acai-logo-swirl {
+    animation: acai-swirl 3.2s ease-in-out infinite;
+    transform-origin: 50% 85%;
+  }
+  @keyframes acai-swirl {
+    0%, 100% { transform: rotate(-7deg) scale(1); }
+    50%      { transform: rotate(7deg) scale(1.06); }
+  }
+
+  /* tamanhos e chips: por padrão sempre visíveis; JS adiciona ".pop-ready"
+     e depois ".pop-in" conforme a seção entra na tela, com leve atraso
+     escalonado entre os itens (nunca ficam escondidos se o JS falhar) */
+  .acai-size.pop-ready, .chip.pop-ready {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+    transition: opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .acai-size.pop-in, .chip.pop-in { opacity: 1; transform: translateY(0) scale(1); }
+
+  /* ---------------- EVENTOS ---------------- */
+  .eventos {
+    background: var(--orange);
+    color: #fff;
+    text-align: center;
+    padding: 72px 24px;
+  }
+  .eventos h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    animation: convoy-bounce 1.6s ease-in-out infinite;
+    animation-delay: 2.8s;
+    animation-play-state: paused;
+  }
+  .eventos h2.in { animation-play-state: running; }
+  @keyframes convoy-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+  }
+  .eventos p { max-width: 680px; margin: 0 auto 32px; line-height: 1.7; font-size: 15.5px; opacity: 0.96; }
+
+  .trailer-stage {
+    overflow: hidden;
+    height: 108px;
+    margin: 8px auto 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .convoy {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    transform: translateX(-180%);
+    opacity: 0;
+    transition: transform 2.8s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 1.6s ease;
+    animation: convoy-bounce 1.6s ease-in-out infinite;
+    animation-delay: 2.8s;
+    animation-play-state: paused;
+  }
+  .trailer-stage.in .convoy {
+    transform: translateX(0);
+    opacity: 1;
+    animation-play-state: running;
+  }
+  .convoy .cart-wrap { position: relative; flex-shrink: 0; }
+  .convoy .puff {
+    position: absolute;
+    left: -6px;
+    bottom: 20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.6);
+    animation: puff-rise 1.6s ease-out infinite;
+  }
+  @keyframes puff-rise {
+    0%   { transform: translate(0, 0) scale(0.4); opacity: 0.55; }
+    100% { transform: translate(-40px, -40px) scale(1.6); opacity: 0; }
+  }
+  .convoy .connector {
+    height: 4px;
+    width: 12px;
+    margin-bottom: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.6);
+    flex-shrink: 0;
+  }
+  .convoy img {
+    height: 96px;
+    width: auto;
+    filter: drop-shadow(0 12px 16px rgba(0,0,0,0.28));
+  }
+  .convoy img.car { height: 78px; }
+
+  .photo-marquee {
+    overflow: hidden;
+    margin-top: 44px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .photo-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: photo-scroll 26s linear infinite;
+  }
+  .photo-track img {
+    height: 140px;
+    width: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 3px solid rgba(255,255,255,0.4);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    flex-shrink: 0;
+  }
+  @keyframes photo-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .btn-tan {
+    display: inline-block;
+    background: var(--tan);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 16px 34px;
+    border-radius: 999px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+    transition: transform 0.2s;
+  }
+  .btn-tan:hover { transform: translateY(-2px); }
+
+  /* ---------------- UNIDADES / FOOTER ---------------- */
+  .unidades {
+    background: #121212;
+    color: #fff;
+    padding: 64px 24px 32px;
+  }
+  .unidades .section-title, .unidades .section-sub { color: #fff; }
+  .unidades .section-sub { color: rgba(255,255,255,0.8); }
+  .maps-grid { display: grid; gap: 20px; grid-template-columns: 1fr; margin-bottom: 48px; }
+  @media (min-width: 760px) { .maps-grid { grid-template-columns: 1fr 1fr; } }
+  .map-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    color: var(--ink);
+  }
+  .map-card iframe {
+    width: 100%;
+    height: 200px;
+    border: 0;
+    display: block;
+  }
+  .map-card .map-info {
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .map-card .pin {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    background: #fff3e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .map-card .map-label { font-size: 13.5px; font-weight: 600; }
+  .map-card .map-label span { display: block; font-weight: 400; color: var(--mute); font-size: 12px; margin-top: 3px; }
+  .map-card .map-label a {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--orange-dark);
+    border-bottom: 1.5px solid var(--orange-dark);
+  }
+
+  footer.foot {
+    border-top: 1px solid rgba(255,255,255,0.25);
+    padding-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    text-align: center;
+  }
+  .foot-brand { display: flex; align-items: center; gap: 16px; justify-content: center; text-align: center; }
+  .foot-brand img { height: 64px; width: 64px; border-radius: 999px; flex-shrink: 0; }
+  @media (min-width: 480px) { .foot-brand img { height: 78px; width: 78px; } }
+  .foot-brand-name { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; }
+  @media (min-width: 480px) { .foot-brand-name { font-size: 27px; } }
+  .foot-tagline { font-size: 14px; font-weight: 400; opacity: 0.75; margin-top: 4px; }
+  @media (min-width: 480px) { .foot-tagline { font-size: 16px; } }
+  .copyright { text-align: center; font-size: 11.5px; opacity: 0.65; margin-top: 28px; }
+</style>
+</head>
+<body>
+
+  <div class="intro-overlay" id="intro-overlay">
+    <img class="intro-logo" id="intro-logo" src="__LOGO__" alt="Dog do Quadradinho" />
+  </div>
+
+  <header>
+    <div class="header-row">
+      <img class="logo" id="header-logo" src="__LOGO__" alt="Dog do Quadradinho" style="visibility:hidden;" />
+      <nav>
+        <a href="#cardapio">Fazer pedido</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#unidades">Unidades</a>
+      </nav>
+      <button class="cart-trigger" onclick="openCart()" aria-label="Abrir carrinho">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="#fff"/><circle cx="18" cy="21" r="1.5" fill="#fff"/></svg>
+        <span class="badge cart-badge" style="display:none;">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-head">
+      <h3 id="cart-title">Seu carrinho</h3>
+      <button class="cart-close" onclick="closeCart()" aria-label="Fechar carrinho">&times;</button>
+    </div>
+    <div class="cart-body" id="cart-body"></div>
+    <div class="cart-foot" id="cart-foot"></div>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="hero-sprouts" aria-hidden="true">
+      <img class="sprout" src="__SPROUT__" style="left:0%; top:5%; width:27px; --rot:16deg; --delay:1.13s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:18%; top:5%; width:55px; --rot:-11deg; --delay:1.48s; --op:0.34;" />
+      <img class="sprout" src="__SPROUT__" style="left:27%; top:4%; width:36px; --rot:-6deg; --delay:0.86s; --op:0.31;" />
+      <img class="sprout" src="__SPROUT__" style="left:42%; top:4%; width:31px; --rot:-3deg; --delay:0.26s; --op:0.38;" />
+      <img class="sprout" src="__SPROUT__" style="left:53%; top:6%; width:54px; --rot:18deg; --delay:0.66s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:11%; top:15%; width:53px; --rot:6deg; --delay:1.27s; --op:0.46;" />
+      <img class="sprout" src="__SPROUT__" style="left:19%; top:16%; width:38px; --rot:-7deg; --delay:0.52s; --op:0.34;" />
+      <img class="sprout" src="__SPROUT__" style="left:34%; top:13%; width:43px; --rot:-6deg; --delay:0.55s; --op:0.42;" />
+      <img class="sprout" src="__SPROUT__" style="left:44%; top:16%; width:45px; --rot:-2deg; --delay:0.29s; --op:0.55;" />
+      <img class="sprout" src="__SPROUT__" style="left:98%; top:16%; width:34px; --rot:12deg; --delay:0.21s; --op:0.50;" />
+      <img class="sprout" src="__SPROUT__" style="left:12%; top:27%; width:41px; --rot:-8deg; --delay:0.01s; --op:0.34;" />
+      <img class="sprout" src="__SPROUT__" style="left:42%; top:29%; width:31px; --rot:14deg; --delay:0.68s; --op:0.53;" />
+      <img class="sprout" src="__SPROUT__" style="left:52%; top:25%; width:46px; --rot:13deg; --delay:0.58s; --op:0.34;" />
+      <img class="sprout" src="__SPROUT__" style="left:65%; top:27%; width:48px; --rot:10deg; --delay:0.71s; --op:0.40;" />
+      <img class="sprout" src="__SPROUT__" style="left:82%; top:29%; width:30px; --rot:-1deg; --delay:0.26s; --op:0.55;" />
+      <img class="sprout" src="__SPROUT__" style="left:91%; top:25%; width:59px; --rot:18deg; --delay:1.57s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:7%; top:37%; width:33px; --rot:-17deg; --delay:0.89s; --op:0.42;" />
+      <img class="sprout" src="__SPROUT__" style="left:37%; top:38%; width:26px; --rot:-13deg; --delay:0.00s; --op:0.53;" />
+      <img class="sprout" src="__SPROUT__" style="left:61%; top:40%; width:42px; --rot:-2deg; --delay:0.66s; --op:0.46;" />
+      <img class="sprout" src="__SPROUT__" style="left:75%; top:36%; width:57px; --rot:9deg; --delay:1.33s; --op:0.50;" />
+      <img class="sprout" src="__SPROUT__" style="left:30%; top:48%; width:58px; --rot:-11deg; --delay:0.70s; --op:0.38;" />
+      <img class="sprout" src="__SPROUT__" style="left:40%; top:52%; width:37px; --rot:11deg; --delay:1.21s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:51%; top:52%; width:52px; --rot:-2deg; --delay:1.50s; --op:0.40;" />
+      <img class="sprout" src="__SPROUT__" style="left:22%; top:62%; width:30px; --rot:-1deg; --delay:0.48s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:37%; top:65%; width:32px; --rot:14deg; --delay:1.24s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:58%; top:61%; width:33px; --rot:17deg; --delay:0.63s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:75%; top:62%; width:39px; --rot:-6deg; --delay:0.25s; --op:0.48;" />
+      <img class="sprout" src="__SPROUT__" style="left:98%; top:65%; width:29px; --rot:15deg; --delay:1.06s; --op:0.34;" />
+      <img class="sprout" src="__SPROUT__" style="left:2%; top:77%; width:28px; --rot:6deg; --delay:1.07s; --op:0.48;" />
+      <img class="sprout" src="__SPROUT__" style="left:17%; top:78%; width:59px; --rot:-12deg; --delay:1.06s; --op:0.42;" />
+      <img class="sprout" src="__SPROUT__" style="left:66%; top:74%; width:45px; --rot:-10deg; --delay:1.35s; --op:0.42;" />
+      <img class="sprout" src="__SPROUT__" style="left:81%; top:74%; width:44px; --rot:6deg; --delay:0.55s; --op:0.55;" />
+      <img class="sprout" src="__SPROUT__" style="left:23%; top:85%; width:35px; --rot:1deg; --delay:0.91s; --op:0.48;" />
+      <img class="sprout" src="__SPROUT__" style="left:48%; top:89%; width:49px; --rot:-7deg; --delay:0.15s; --op:0.53;" />
+      <img class="sprout" src="__SPROUT__" style="left:61%; top:87%; width:35px; --rot:-8deg; --delay:1.45s; --op:0.42;" />
+      <img class="sprout" src="__SPROUT__" style="left:72%; top:88%; width:59px; --rot:-6deg; --delay:1.44s; --op:0.42;" />
+      <img class="sprout" src="__SPROUT__" style="left:2%; top:97%; width:46px; --rot:3deg; --delay:0.01s; --op:0.29;" />
+      <img class="sprout" src="__SPROUT__" style="left:17%; top:97%; width:56px; --rot:-2deg; --delay:0.71s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:44%; top:96%; width:28px; --rot:17deg; --delay:0.80s; --op:0.48;" />
+      <img class="sprout" src="__SPROUT__" style="left:56%; top:95%; width:48px; --rot:14deg; --delay:0.41s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:65%; top:95%; width:29px; --rot:-12deg; --delay:0.07s; --op:0.62;" />
+      <img class="sprout" src="__SPROUT__" style="left:93%; top:96%; width:55px; --rot:-2deg; --delay:0.12s; --op:0.33;" />
+    </div>
+    <div class="hero-content">
+      <h1>Do sonho para<br class="mob-brk"> o seu paladar!<br>O hot dog<br class="mob-brk"> artesanal que<br class="mob-brk"> tem a cara<br class="mob-brk"> de Brasília!</h1>
+      <a href="#cardapio" class="btn-hero">Quero um Dog Agora!</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section-title">O que nos<br class="mob-brk"> faz únicos.</h2>
+      <p class="section-sub">Três pilares que estão em cada quadradinho que sai da chapa.</p>
+
+      <div class="pillars">
+        <div class="pillar" onclick="this.classList.toggle('flipped')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped');}">
+          <div class="pillar-inner">
+            <div class="pillar-face pillar-front">
+              <div class="icon">
+                <img src="__PILLAR_HOTDOG__" alt="Hot dog" />
+              </div>
+              <h3>Pão Artesanal</h3>
+              <span class="flip-hint">Toque pra revelar &#8635;</span>
+            </div>
+            <div class="pillar-face pillar-back">
+              <p>Pão de leite ninho macio e leve, feito pra derreter na boca a cada mordida.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pillar" onclick="this.classList.toggle('flipped')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped');}">
+          <div class="pillar-inner">
+            <div class="pillar-face pillar-front">
+              <div class="icon">
+                <img src="__PILLAR_HOTDOG__" alt="Hot dog" />
+              </div>
+              <h3>Qualidade</h3>
+              <span class="flip-hint">Toque pra revelar &#8635;</span>
+            </div>
+            <div class="pillar-face pillar-back">
+              <p>Ingredientes selecionados de produtores locais, do jeito que o DF merece.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pillar" onclick="this.classList.toggle('flipped')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('flipped');}">
+          <div class="pillar-inner">
+            <div class="pillar-face pillar-front">
+              <div class="icon">
+                <img src="__PILLAR_HOTDOG__" alt="Hot dog" />
+              </div>
+              <h3>Maioneses Artesanais</h3>
+              <span class="flip-hint">Toque pra revelar &#8635;</span>
+            </div>
+            <div class="pillar-face pillar-back">
+              <p>Nossas três estrelas: Alho, Defumada e Ervas &mdash; feitas na casa, todo dia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        Personalize seu hot<br class="mob-brk"> dog com as 3<br class="mob-brk"> maioneses caseiras<br class="mob-brk"> sem custo adicional!
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cardapio" style="padding-top:0;">
+    <div class="wrap">
+      <h2 class="section-title">Mostruário<br class="mob-brk"> do Quadradinho</h2>
+      <p class="section-sub">Deslize e escolha o seu. Todo Dog Simples pode virar Duplo com um clique.</p>
+
+      <div class="carousel-shell">
+        <div class="carousel" id="carousel">
+
+          <div class="dish-card">
+            <div class="img-box">
+              <img id="dish-img-1" src="__DOG_SIMPLES__" alt="Dog Simples" />
+            </div>
+            <h3 id="dish-name-1">Dog Simples</h3>
+            <p class="desc" id="dish-desc-1">Pão de leite ninho, molho caseiro, 1 salsicha, queijo, maionese caseira, milho e batata palha.</p>
+            <button class="btn-link-toggle" id="dish-toggle-1" onclick="toggleDish('d1')">Transformar em Duplo</button>
+            <div class="add-row">
+              <span class="price" id="dish-price-1">R$ 18</span>
+              <button class="btn-add" onclick="addDishToCart('d1', this)">Adicionar</button>
+            </div>
+          </div>
+
+          <div class="dish-card">
+            <div class="img-box">
+              <img id="dish-img-2" src="__DOG_BACON__" alt="Dog Simples Bacon" />
+            </div>
+            <h3 id="dish-name-2">Dog Simples Bacon</h3>
+            <p class="desc" id="dish-desc-2">Pão de leite ninho, molho caseiro, 1 salsicha, queijo, maionese caseira, milho, bacon crisp e batata palha.</p>
+            <button class="btn-link-toggle" id="dish-toggle-2" onclick="toggleDish('d2')">Transformar em Duplo</button>
+            <div class="add-row">
+              <span class="price" id="dish-price-2">R$ 21</span>
+              <button class="btn-add" onclick="addDishToCart('d2', this)">Adicionar</button>
+            </div>
+          </div>
+
+          <div class="dish-card">
+            <div class="img-box">
+              <img id="dish-img-3" src="__DOG_SEMPAO__" alt="Dog Sem Pão Simples" />
+            </div>
+            <h3 id="dish-name-3">Dog Sem Pão Simples</h3>
+            <p class="desc" id="dish-desc-3">Molho caseiro, 1 salsicha, queijo, maionese caseira e milho servidos na caixinha. Sem pão.</p>
+            <button class="btn-link-toggle" id="dish-toggle-3" onclick="toggleDish('d3')">Transformar em Duplo</button>
+            <div class="add-row">
+              <span class="price" id="dish-price-3">R$ 17</span>
+              <button class="btn-add" onclick="addDishToCart('d3', this)">Adicionar</button>
+            </div>
+          </div>
+
+          <div class="dish-card">
+            <div class="img-box"><img src="__BATATA_CHIPS__" alt="Batata Chips" /></div>
+            <h3>Batata Chips</h3>
+            <p class="desc">Porção de batata chips crocante, feita na hora.</p>
+            <div class="add-row">
+              <span class="price">R$ 9</span>
+              <button class="btn-add" onclick="addToCart('Batata Chips', 9, this)">Adicionar</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="carousel-arrows">
+          <button class="arrow-btn" onclick="scrollCarousel(-1)">&#8592;</button>
+          <button class="arrow-btn" onclick="scrollCarousel(1)">&#8594;</button>
+        </div>
+      </div>
+
+      <div class="bebidas-block">
+        <h3 class="bebidas-title">Bebidas</h3>
+        <div class="bebidas-grid">
+          <div class="bebida-card">
+            <div class="img-box"><img src="__DRINK_REFRI__" alt="Refri Lata" /></div>
+            <h4>Refri Lata</h4>
+            <p class="desc">Coca-Cola, Coca-Cola Zero, Guaraná, Sprite ou Fanta (uva/laranja).</p>
+            <div class="add-row">
+              <span class="price">R$ 6</span>
+              <button class="btn-add" onclick="addToCart('Refri Lata', 6, this)">Adicionar</button>
+            </div>
+          </div>
+          <div class="bebida-card">
+            <div class="img-box"><img src="__DRINK_SUCO__" alt="Suco Lata" /></div>
+            <h4>Suco Lata</h4>
+            <p class="desc">Del Valle: maracujá ou uva.</p>
+            <div class="add-row">
+              <span class="price">R$ 9</span>
+              <button class="btn-add" onclick="addToCart('Suco Lata', 9, this)">Adicionar</button>
+            </div>
+          </div>
+          <div class="bebida-card">
+            <div class="img-box"><img src="__DRINK_AGUA__" alt="Água com Gás" /></div>
+            <h4>Água com Gás</h4>
+            <p class="desc">Gelada, do jeito que combina com o dog.</p>
+            <div class="add-row">
+              <span class="price">R$ 5</span>
+              <button class="btn-add" onclick="addToCart('Água com Gás', 5, this)">Adicionar</button>
+            </div>
+          </div>
+          <div class="bebida-card">
+            <div class="img-box"><img src="__DRINK_AGUA__" alt="Água sem Gás" /></div>
+            <h4>Água sem Gás</h4>
+            <p class="desc">Gelada, do jeito que combina com o dog.</p>
+            <div class="add-row">
+              <span class="price">R$ 4</span>
+              <button class="btn-add" onclick="addToCart('Água sem Gás', 4, this)">Adicionar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section acai-section" style="background:var(--acai-dark-bg); padding-top:56px;">
+    <div class="acai-sprouts" aria-hidden="true">
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:17%; top:3%; width:39px; --rot:-26deg; --delay:0.93s; --op:0.71;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:37%; top:3%; width:39px; --rot:20deg; --delay:1.21s; --op:0.72;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:45%; top:7%; width:44px; --rot:25deg; --delay:0.29s; --op:0.86;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:13%; top:24%; width:68px; --rot:-29deg; --delay:1.56s; --op:0.88;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:23%; top:21%; width:46px; --rot:-32deg; --delay:1.54s; --op:0.95;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:55%; top:18%; width:44px; --rot:-23deg; --delay:0.97s; --op:0.91;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:6%; top:43%; width:73px; --rot:-36deg; --delay:1.20s; --op:0.69;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:14%; top:36%; width:60px; --rot:35deg; --delay:0.50s; --op:0.83;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:44%; top:46%; width:45px; --rot:30deg; --delay:0.95s; --op:0.71;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:60%; top:38%; width:54px; --rot:24deg; --delay:1.35s; --op:0.93;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:84%; top:38%; width:59px; --rot:-30deg; --delay:1.59s; --op:0.95;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:96%; top:38%; width:50px; --rot:-34deg; --delay:0.03s; --op:0.83;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:6%; top:64%; width:60px; --rot:40deg; --delay:1.21s; --op:0.65;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:60%; top:55%; width:49px; --rot:29deg; --delay:0.79s; --op:0.68;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:75%; top:58%; width:61px; --rot:30deg; --delay:0.34s; --op:0.65;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:0%; top:78%; width:38px; --rot:39deg; --delay:1.02s; --op:0.65;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:50%; top:82%; width:60px; --rot:28deg; --delay:1.56s; --op:0.82;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:65%; top:74%; width:50px; --rot:-31deg; --delay:1.11s; --op:0.95;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:97%; top:76%; width:67px; --rot:21deg; --delay:0.54s; --op:0.91;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:22%; top:92%; width:60px; --rot:-32deg; --delay:1.10s; --op:0.74;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:52%; top:97%; width:49px; --rot:28deg; --delay:0.13s; --op:0.86;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:74%; top:97%; width:61px; --rot:-20deg; --delay:1.54s; --op:0.74;" />
+      <img class="acai-sprout" src="__ACAI_BOWL__" style="left:88%; top:95%; width:68px; --rot:-20deg; --delay:0.21s; --op:0.95;" />
+    </div>
+    <div class="wrap">
+      <p style="text-align:center; text-transform:uppercase; letter-spacing:.08em; font-size:12px; font-weight:700; color:#fff; margin:0 0 8px;">Para fechar com chave de ouro</p>
+      <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:12px;">
+        <img src="__ACAI_LOGO__" alt="Du Açaí" class="acai-logo-swirl" style="height:52px; width:52px; border-radius:999px; box-shadow:0 6px 16px rgba(0,0,0,0.3);" />
+        <h2 class="section-title" style="margin:0; color:#fff;">Açaí <span style="color:var(--acai-soft);">Du Açaí</span></h2>
+      </div>
+      <p class="section-sub" style="color:#f0e6fb;">Frescor e qualidade que acompanham seu dog!<br>Escolha o seu tamanho e monte com as frutas e cremes que quiser!</p>
+
+      <div class="acai-box">
+        <div class="acai-sizes" id="acai-sizes">
+          <button type="button" class="acai-size selected" onclick="selectAcaiSize(this, '300ml', 15, 3)"><b>300ml</b><span>R$ 15,00</span><em>+3 escolhas</em></button>
+          <button type="button" class="acai-size" onclick="selectAcaiSize(this, '500ml', 20, 4)"><b>500ml</b><span>R$ 20,00</span><em>+4 escolhas</em></button>
+          <button type="button" class="acai-size" onclick="selectAcaiSize(this, '700ml', 25, 5)"><b>700ml</b><span>R$ 25,00</span><em>+5 escolhas</em></button>
+        </div>
+        <p class="acai-extras-counter" id="acai-extras-counter">0 de 3 escolhas selecionadas</p>
+
+        <div class="acai-cols">
+          <div>
+            <h4>Frutas &amp; Cremes <span class="chip-hint">(toque pra escolher)</span></h4>
+            <div class="chip-list">
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Banana</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Morango</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Creme de Maracujá</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Creme de Morango</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Creme de Ninho</button>
+            </div>
+          </div>
+          <div>
+            <h4>Acompanhamentos <span class="chip-hint">(toque pra escolher)</span></h4>
+            <div class="chip-list">
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Paçoca</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Amendoim</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Flocos de Arroz</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Mel</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Granola</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Chocoball</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Farinha Láctea</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Leite Condensado</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Leite em Pó</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Ovomaltine</button>
+              <button type="button" class="chip" onclick="toggleAcaiExtra(this)">Confeti</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="acai-add-row">
+          <span class="price" id="acai-price" style="color:var(--acai);">R$ 15</span>
+          <button class="btn-add-acai" id="acai-add-btn" onclick="addAcaiToCart(this)">Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="eventos" id="eventos">
+    <h2>Atendimento<br class="mob-brk"> a Eventos</h2>
+    <div class="trailer-stage" id="trailer-stage">
+      <div class="convoy">
+        <div class="cart-wrap">
+          <span class="puff" style="animation-delay:0s;"></span>
+          <span class="puff" style="animation-delay:0.4s;"></span>
+          <span class="puff" style="animation-delay:0.8s;"></span>
+          <img src="__INTRO_CART__" alt="Trailer Dog do Quadradinho" />
+        </div>
+        <span class="connector"></span>
+        <img class="car" src="__INTRO_CAR__" alt="Carro Dog do Quadradinho" />
+      </div>
+    </div>
+    <p>Leve a experiência do Dog do Quadradinho para seu evento! Seja uma festa particular ou um grande festival público, nosso food truck garante agilidade, higiene impecável e um sabor inesquecível. Não somos apenas um serviço de buffet, levamos a alma do nosso negócio para celebrar com você.</p>
+    <a href="https://wa.me/5561993079778?text=Ol%C3%A1!%20Quero%20solicitar%20um%20or%C3%A7amento%20para%20evento." class="btn-tan" target="_blank" rel="noreferrer">Solicitar Orçamento Personalizado</a>
+
+    <div class="photo-marquee">
+      <div class="photo-track">
+        <img src="__EVENTO_1__" alt="Dog do Quadradinho em evento particular" />
+        <img src="__EVENTO_2__" alt="Dog do Quadradinho em festival" />
+        <img src="__EVENTO_3__" alt="Hot dog servido em evento" />
+        <img src="__EVENTO_4__" alt="Mesa de buffet do evento" />
+        <img src="__EVENTO_1__" alt="" aria-hidden="true" />
+        <img src="__EVENTO_2__" alt="" aria-hidden="true" />
+        <img src="__EVENTO_3__" alt="" aria-hidden="true" />
+        <img src="__EVENTO_4__" alt="" aria-hidden="true" />
+      </div>
+    </div>
+  </section>
+
+  <section class="unidades" id="unidades">
+    <div class="wrap">
+      <h2 class="section-title">Nossas Unidades</h2>
+      <p class="section-sub">Fixo no Itapoã Parque e no Grande Colorado — ou na rua, em eventos por todo o DF.</p>
+
+      <div class="maps-grid">
+        <div class="map-card">
+          <iframe loading="lazy" title="Mapa da unidade Itapoã Parque" src="https://www.openstreetmap.org/export/embed.html?bbox=-47.81,-15.74,-47.75,-15.70&layer=mapnik&marker=-15.72,-47.78"></iframe>
+          <div class="map-info">
+            <span class="pin"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13Z" stroke="#e67014" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" stroke="#e67014" stroke-width="1.8"/></svg></span>
+            <p class="map-label">
+              Unidade Itapoã Parque
+              <span>Área aproximada — endereço exato em breve, chama no WhatsApp</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=Itapo%C3%A3+Parque%2C+Bras%C3%ADlia+-+DF" target="_blank" rel="noreferrer">Abrir no Google Maps &#8599;</a>
+            </p>
+          </div>
+        </div>
+        <div class="map-card">
+          <iframe loading="lazy" title="Mapa da unidade Grande Colorado" src="https://www.openstreetmap.org/export/embed.html?bbox=-47.82,-15.67,-47.76,-15.63&layer=mapnik&marker=-15.65,-47.79"></iframe>
+          <div class="map-info">
+            <span class="pin"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13Z" stroke="#e67014" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" stroke="#e67014" stroke-width="1.8"/></svg></span>
+            <p class="map-label">
+              Império dos Nobres — Grande Colorado
+              <span>Área aproximada — endereço exato em breve, chama no WhatsApp</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=Setor+Grande+Colorado%2C+Sobradinho+-+DF" target="_blank" rel="noreferrer">Abrir no Google Maps &#8599;</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="foot" id="contato">
+        <div class="foot-brand">
+          <img src="__LOGO__" alt="Dog do Quadradinho" />
+          <div>
+            <div class="foot-brand-name">Dog do Quadradinho</div>
+            <div class="foot-tagline">Do sonho para o seu paladar!</div>
+          </div>
+        </div>
+      </footer>
+
+      <p class="copyright">© 2026 Dog do Quadradinho. Todos os direitos reservados.</p>
+    </div>
+  </section>
+
+  <div class="social-float">
+    <button type="button" class="social-btn social-cart" id="float-cart-btn" onclick="openCart()" aria-label="Abrir carrinho">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 8H6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.5" fill="#fff"/><circle cx="18" cy="21" r="1.5" fill="#fff"/></svg>
+      <span class="badge cart-badge" style="display:none;">0</span>
+    </button>
+    <a href="https://wa.me/5561993079778" target="_blank" rel="noreferrer" class="social-btn social-whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0-7.6 13.8L3 21l4.3-1.4A9 9 0 1 0 12 3Z" stroke="#e67014" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><path d="M9 9.1c.5 3.1 2.8 5.4 5.9 5.9.6.1 1.7-.5 1.9-1.1.1-.2 0-.5-.2-.6l-1.6-1c-.2-.1-.5-.1-.6.1l-.5.6c-1-.5-1.9-1.4-2.4-2.4l.6-.5c.2-.1.2-.4.1-.6l-1-1.6c-.1-.2-.4-.3-.6-.2-.6.2-1.2 1.3-1.1 1.9Z" fill="#e67014"/></svg>
+    </a>
+    <a href="https://www.instagram.com/dogdoquadradinhodf/" target="_blank" rel="noreferrer" class="social-btn social-instagram" aria-label="Instagram">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="#e67014" stroke-width="1.8"/><circle cx="12" cy="12" r="4.3" stroke="#e67014" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="#e67014"/></svg>
+    </a>
+  </div>
+
+  <script>
+    const DISHES = {
+      d1: {
+        simples: { name: 'Dog Simples', price: 18, img: '__DOG_SIMPLES__', desc: 'Pão de leite ninho, molho caseiro, 1 salsicha, queijo, maionese caseira, milho e batata palha.' },
+        duplo:   { name: 'Dog Duplo',   price: 20, img: '__DOG_DUPLO__',   desc: 'Pão de leite ninho, molho caseiro, 2 salsichas, queijo, maionese caseira, milho e batata palha.' },
+      },
+      d2: {
+        simples: { name: 'Dog Simples Bacon', price: 21, img: '__DOG_BACON__',       desc: 'Pão de leite ninho, molho caseiro, 1 salsicha, queijo, maionese caseira, milho, bacon crisp e batata palha.' },
+        duplo:   { name: 'Dog Duplo Bacon',   price: 23, img: '__DOG_BACON_DUPLO__', desc: 'Pão de leite ninho, molho caseiro, 2 salsichas, queijo, maionese caseira, milho, bacon crisp e batata palha.' },
+      },
+      d3: {
+        simples: { name: 'Dog Sem Pão Simples', price: 17, img: '__DOG_SEMPAO__',       desc: 'Molho caseiro, 1 salsicha, queijo, maionese caseira e milho servidos na caixinha. Sem pão.' },
+        duplo:   { name: 'Dog Sem Pão Duplo',   price: 19, img: '__DOG_SEMPAO_DUPLO__', desc: 'Molho caseiro, 2 salsichas, queijo, maionese caseira e milho servidos na caixinha. Sem pão.' },
+      },
+    };
+    const dishState = { d1: false, d2: false, d3: false }; // false = simples, true = duplo
+
+    function toggleDish(key) {
+      dishState[key] = !dishState[key];
+      const num = key.slice(1);
+      const data = DISHES[key][dishState[key] ? 'duplo' : 'simples'];
+      const img = document.getElementById('dish-img-' + num);
+      const name = document.getElementById('dish-name-' + num);
+      const price = document.getElementById('dish-price-' + num);
+      const desc = document.getElementById('dish-desc-' + num);
+      const btn = document.getElementById('dish-toggle-' + num);
+
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = data.img;
+        img.style.opacity = '1';
+      }, 180);
+
+      name.textContent = data.name;
+      price.textContent = 'R$ ' + data.price;
+      desc.textContent = data.desc;
+      btn.textContent = dishState[key] ? 'Voltar para Simples' : 'Transformar em Duplo';
+      btn.classList.toggle('is-duplo', dishState[key]);
+    }
+
+    function scrollCarousel(dir) {
+      document.getElementById('carousel').scrollBy({ left: dir * 280, behavior: 'smooth' });
+    }
+
+    // títulos de seção "estouram" (pop) ao entrar na tela. Sempre parte de um
+    // estado visível por padrão no CSS: só ganha ".pop-ready" (escondido) bem
+    // aqui, então cada elemento observado tem uma rede de segurança individual
+    // que força ".pop-in" mesmo se o IntersectionObserver nunca disparar
+    (function initPopReveal(selector, extraStagger) {
+      const els = document.querySelectorAll(selector);
+      if (!els.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('pop-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach((el, i) => {
+        el.classList.add('pop-ready');
+        if (extraStagger) el.style.transitionDelay = Math.min(i * 0.07, 0.6) + 's';
+        io.observe(el);
+        setTimeout(() => el.classList.add('pop-in'), 3000);
+      });
+    })('.section-title', false);
+    (function initAcaiStagger() {
+      const items = document.querySelectorAll('#acai-sizes .acai-size, .acai-cols .chip');
+      if (!items.length) return;
+      const acaiBox = document.querySelector('.acai-box');
+      if (!acaiBox) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          items.forEach((el, i) => {
+            el.style.transitionDelay = Math.min(i * 0.04, 0.7) + 's';
+            el.classList.add('pop-in');
+          });
+          io.unobserve(entry.target);
+        });
+      }, { threshold: 0.2 });
+      items.forEach((el) => el.classList.add('pop-ready'));
+      io.observe(acaiBox);
+      setTimeout(() => items.forEach((el) => el.classList.add('pop-in')), 3500);
+    })();
+
+    // o carrinho flutuante (junto do whatsapp/instagram) só aparece quando o
+    // carrinho do cabeçalho sai da tela rolando — assim sempre tem um acesso
+    // rápido ao carrinho visível, sem duplicar o ícone enquanto o de cima
+    // ainda está à vista
+    (function initFloatCart() {
+      const headerCartBtn = document.querySelector('header .cart-trigger');
+      const floatCartBtn = document.getElementById('float-cart-btn');
+      if (!floatCartBtn) return;
+      if (!headerCartBtn) { floatCartBtn.classList.add('visible'); return; }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          floatCartBtn.classList.toggle('visible', !entry.isIntersecting);
+        });
+      }, { threshold: 0 });
+      io.observe(headerCartBtn);
+    })();
+
+    // no mobile não tem cursor visível, então um hot dog "brota" rapidinho
+    // no ponto onde o dedo toca a tela, no lugar do cursor customizado do desktop
+    (function initTapHotdog() {
+      const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      if (!isTouch) return;
+      const svgMarkup = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><g transform="rotate(-18 20 20)"><rect x="6" y="16" width="28" height="10" rx="5" fill="#e0983a" stroke="#3a2210" stroke-width="1.6"/><rect x="9" y="12" width="22" height="9" rx="4.5" fill="#c1503d" stroke="#2c150c" stroke-width="1.6"/><path d="M11 16 L15 19 L19 16 L23 19 L27 16 L31 19" stroke="#f9d020" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></svg>';
+      document.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'touch') return;
+        const el = document.createElement('div');
+        el.className = 'tap-hotdog';
+        el.style.left = e.clientX + 'px';
+        el.style.top = e.clientY + 'px';
+        el.innerHTML = svgMarkup;
+        document.body.appendChild(el);
+        el.addEventListener('animationend', () => el.remove());
+        setTimeout(() => el.remove(), 800);
+      }, { passive: true });
+    })();
+
+    // no mobile, os cards de "o que nos faz únicos" viram sozinhos conforme
+    // o scroll passa por eles, pra quem não clica ver o verso mesmo assim
+    if (window.matchMedia('(max-width: 759px)').matches) {
+      const pillarObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('flipped');
+        });
+      }, { rootMargin: '0px 0px -45% 0px', threshold: 0 });
+      document.querySelectorAll('.pillar').forEach((el) => pillarObserver.observe(el));
+    }
+
+    // trailer entra devagar e para embaixo do título toda vez que a seção
+    // de eventos aparece na tela, e some de novo ao rolar pra cima (repete
+    // a animação sempre que volta a ficar visível)
+    const trailerStage = document.getElementById('trailer-stage');
+    const eventosTitle = document.querySelector('.eventos h2');
+    if (trailerStage) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          trailerStage.classList.toggle('in', entry.isIntersecting);
+          if (eventosTitle) eventosTitle.classList.toggle('in', entry.isIntersecting);
+        });
+      }, { threshold: 0.4 });
+      io.observe(trailerStage);
+    }
+
+    // ---------------- CARRINHO ----------------
+    const CART_KEY = 'dog-quadradinho-v2-cart';
+    const WHATSAPP_NUMBER = '5561993079778';
+
+    function loadCart() {
+      try {
+        const raw = localStorage.getItem(CART_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    function saveCart() {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    let cart = loadCart();
+    let cartStep = 'cart';
+    let acaiSelected = { label: '300ml', price: 15, max: 3 };
+
+    function cartAddItem(name, price) {
+      const id = Date.now() + '-' + Math.random().toString(36).slice(2);
+      cart.push({ id, name, price, quantity: 1 });
+      saveCart();
+      renderCart();
+      return id;
+    }
+    function cartRemoveItem(id) {
+      cart = cart.filter((i) => i.id !== id);
+      saveCart();
+      renderCart();
+    }
+    function cartSetQuantity(id, qty) {
+      if (qty <= 0) { cartRemoveItem(id); return; }
+      cart = cart.map((i) => (i.id === id ? { ...i, quantity: qty } : i));
+      saveCart();
+      renderCart();
+    }
+    function cartTotal() {
+      return cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+    }
+    function cartCount() {
+      return cart.reduce((sum, i) => sum + i.quantity, 0);
+    }
+
+    function flashAdded(btn) {
+      if (!btn) return;
+      const original = btn.textContent;
+      btn.textContent = '✓ Adicionado';
+      btn.classList.add('is-added');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('is-added');
+      }, 1200);
+    }
+
+    function addToCart(name, price, btn) {
+      cartAddItem(name, price);
+      flashAdded(btn);
+    }
+    function addDishToCart(key, btn) {
+      const data = DISHES[key][dishState[key] ? 'duplo' : 'simples'];
+      cartAddItem(data.name, data.price);
+      flashAdded(btn);
+    }
+    function selectAcaiSize(btn, label, price, max) {
+      acaiSelected = { label, price, max };
+      document.querySelectorAll('#acai-sizes .acai-size').forEach((b) => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('acai-price').textContent = 'R$ ' + price;
+
+      // se o novo tamanho permite menos escolhas do que já tinha selecionado,
+      // remove as últimas escolhas até caber no novo limite
+      while (acaiExtras.size > max) {
+        const last = [...acaiExtras][acaiExtras.size - 1];
+        acaiExtras.delete(last);
+        const chip = [...document.querySelectorAll('.acai-cols .chip')].find((c) => c.textContent.trim() === last);
+        if (chip) chip.classList.remove('selected');
+      }
+      updateAcaiExtrasUI();
+    }
+    const acaiExtras = new Set();
+    function updateAcaiExtrasUI() {
+      const max = acaiSelected.max;
+      const count = acaiExtras.size;
+      document.querySelectorAll('.acai-cols .chip').forEach((chip) => {
+        chip.classList.toggle('chip-disabled', !chip.classList.contains('selected') && count >= max);
+      });
+      const counter = document.getElementById('acai-extras-counter');
+      if (counter) {
+        counter.textContent = count + ' de ' + max + ' escolhas selecionadas';
+        counter.classList.toggle('is-full', count >= max);
+      }
+    }
+    function toggleAcaiExtra(btn) {
+      const label = btn.textContent.trim();
+      if (acaiExtras.has(label)) {
+        acaiExtras.delete(label);
+        btn.classList.remove('selected');
+      } else {
+        if (acaiExtras.size >= acaiSelected.max) {
+          btn.classList.add('shake');
+          setTimeout(() => btn.classList.remove('shake'), 400);
+          return;
+        }
+        acaiExtras.add(label);
+        btn.classList.add('selected');
+      }
+      updateAcaiExtrasUI();
+    }
+    function addAcaiToCart(btn) {
+      const extras = [...acaiExtras];
+      const name = 'Açaí ' + acaiSelected.label + (extras.length ? ' (' + extras.join(', ') + ')' : '');
+      cartAddItem(name, acaiSelected.price);
+      flashAdded(btn);
+      // limpa a seleção pra montar o próximo açaí do zero
+      acaiExtras.clear();
+      document.querySelectorAll('.acai-cols .chip.selected').forEach((c) => c.classList.remove('selected'));
+      updateAcaiExtrasUI();
+    }
+
+    function openCart() {
+      cartStep = 'cart';
+      renderCart();
+      document.getElementById('cart-overlay').classList.add('open');
+      document.getElementById('cart-drawer').classList.add('open');
+    }
+    function closeCart() {
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.getElementById('cart-drawer').classList.remove('open');
+      setTimeout(() => { cartStep = 'cart'; renderCart(); }, 300);
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function renderCart() {
+      const count = cartCount();
+      document.querySelectorAll('.cart-badge').forEach((badge) => {
+        badge.style.display = count > 0 ? 'flex' : 'none';
+        badge.textContent = count;
+      });
+
+      const title = document.getElementById('cart-title');
+      const body = document.getElementById('cart-body');
+      const foot = document.getElementById('cart-foot');
+
+      if (cartStep === 'success') {
+        title.textContent = 'Pedido enviado';
+        body.innerHTML = '<div class="cart-success"><div class="check">✅</div><p>Seu pedido foi aberto no WhatsApp com tudo preenchido. É só confirmar o envio da mensagem por lá pra gente começar a preparar!</p></div>';
+        foot.innerHTML = '<button class="cart-btn-primary" onclick="closeCart()">Fechar</button>';
+        return;
+      }
+
+      if (cartStep === 'checkout') {
+        title.textContent = 'Finalizar pedido';
+        body.innerHTML = `
+          <label>Nome</label>
+          <input id="cf-name" placeholder="Seu nome" />
+          <label>Endereço de entrega</label>
+          <textarea id="cf-address" rows="3" placeholder="Rua, número, bairro, ponto de referência"></textarea>
+          <label>Observações (opcional)</label>
+          <textarea id="cf-notes" rows="2" placeholder="Ponto da carne, troco, etc."></textarea>
+        `;
+        foot.innerHTML = `
+          <div class="cart-total-row"><span>Total</span><b>R$ ${cartTotal()}</b></div>
+          <div class="cart-btns-row">
+            <button class="cart-btn-secondary" onclick="cartStep='cart'; renderCart();">Voltar</button>
+            <button class="cart-btn-primary" onclick="confirmCheckout()">Confirmar e enviar</button>
+          </div>
+        `;
+        return;
+      }
+
+      // step === 'cart'
+      title.textContent = 'Seu carrinho';
+      if (cart.length === 0) {
+        body.innerHTML = '<p class="cart-empty">Seu carrinho está vazio. Adicione um dog ou um açaí ali em cima pra começar.</p>';
+        foot.innerHTML = '';
+        return;
+      }
+      body.innerHTML = cart.map((item) => `
+        <div class="cart-item">
+          <div>
+            <div class="name">${escapeHtml(item.name)}</div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="cartSetQuantity('${item.id}', ${item.quantity - 1})">−</button>
+              <span>${item.quantity}</span>
+              <button class="qty-btn" onclick="cartSetQuantity('${item.id}', ${item.quantity + 1})">+</button>
+            </div>
+          </div>
+          <div class="line-right">
+            <span class="line-price">R$ ${item.price * item.quantity}</span>
+            <button class="cart-remove" onclick="cartRemoveItem('${item.id}')" aria-label="Remover">&times;</button>
+          </div>
+        </div>
+      `).join('');
+      foot.innerHTML = `
+        <div class="cart-total-row"><span>Total</span><b>R$ ${cartTotal()}</b></div>
+        <button class="cart-btn-primary" onclick="cartStep='checkout'; renderCart();">Finalizar pedido</button>
+      `;
+    }
+
+    function confirmCheckout() {
+      const name = document.getElementById('cf-name');
+      const address = document.getElementById('cf-address');
+      const notes = document.getElementById('cf-notes');
+
+      name.classList.toggle('err', !name.value.trim());
+      address.classList.toggle('err', !address.value.trim());
+      if (!name.value.trim() || !address.value.trim()) return;
+
+      const lines = cart.map((i) => `• ${i.quantity}x ${i.name} (R$ ${i.price * i.quantity})`);
+      const message = [
+        '*Pedido — Dog do Quadradinho*',
+        '',
+        ...lines,
+        '',
+        `*Total: R$ ${cartTotal()}*`,
+        '',
+        `*Cliente:* ${name.value.trim()}`,
+        `*Endereço de entrega:* ${address.value.trim()}`,
+        notes.value.trim() ? `*Observações:* ${notes.value.trim()}` : null,
+        '',
+        'Aguardo a confirmação por aqui, obrigado!',
+      ].filter((l) => l !== null).join('\n');
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noreferrer');
+      cart = [];
+      saveCart();
+      cartStep = 'success';
+      renderCart();
+    }
+
+    renderCart();
+
+    // ---------------- INTRO (moeda girando -> voa pro canto do header) ----------------
+    (function initIntro() {
+      const overlay = document.getElementById('intro-overlay');
+      const introLogo = document.getElementById('intro-logo');
+      const headerLogo = document.getElementById('header-logo');
+      if (!overlay || !introLogo || !headerLogo) return;
+
+      function flyToHeader() {
+        const first = introLogo.getBoundingClientRect();
+        const last = headerLogo.getBoundingClientRect();
+        const dx = (last.left + last.width / 2) - (first.left + first.width / 2);
+        const dy = (last.top + last.height / 2) - (first.top + first.height / 2);
+        const scale = last.width / first.width;
+
+        introLogo.classList.add('intro-fly');
+        introLogo.getBoundingClientRect(); // força reflow: sem isso a transition não anima, pula direto pro final e o transitionend nunca dispara
+        introLogo.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+
+        introLogo.addEventListener('transitionend', () => {
+          headerLogo.style.visibility = 'visible';
+          overlay.classList.add('intro-hide');
+          setTimeout(() => overlay.remove(), 500);
+        }, { once: true });
+      }
+
+      introLogo.addEventListener('animationend', flyToHeader, { once: true });
+      // rede de segurança incondicional: seja lá o que acontecer (animação não
+      // dispara, transition não dispara, etc.), o overlay preto NUNCA pode
+      // ficar cobrindo o site pra sempre — força o fim do intro de qualquer jeito
+      setTimeout(() => {
+        headerLogo.style.visibility = 'visible';
+        if (document.body.contains(overlay)) overlay.remove();
+      }, 3000);
+    })();
+  </script>
+
+</body>
+</html>

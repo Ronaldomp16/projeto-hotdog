@@ -1,0 +1,46 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bunGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2b95c"/>
+      <stop offset="100%" stop-color="#e0983a"/>
+    </linearGradient>
+    <linearGradient id="sausageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d1573a"/>
+      <stop offset="100%" stop-color="#a83726"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="210" rx="150" ry="16" fill="#000" opacity="0.14"/>
+
+  <!-- bun boat -->
+  <path d="M55 150 C55 200 120 200 200 200 C280 200 345 200 345 150 L345 130 C345 118 335 112 322 112 L78 112 C65 112 55 118 55 130 Z"
+        fill="url(#bunGrad)" stroke="#3a2210" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M78 130 C78 150 110 150 130 150" fill="none" stroke="#c9791f" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <path d="M270 150 C290 150 322 150 322 130" fill="none" stroke="#c9791f" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- bun end caps peeking -->
+  <ellipse cx="72" cy="118" rx="26" ry="34" fill="url(#bunGrad)" stroke="#3a2210" stroke-width="7"/>
+  <ellipse cx="328" cy="118" rx="26" ry="34" fill="url(#bunGrad)" stroke="#3a2210" stroke-width="7"/>
+
+  <!-- sausage -->
+  <rect x="88" y="78" width="224" height="66" rx="33" fill="url(#sausageGrad)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="72" cy="111" rx="20" ry="33" fill="url(#sausageGrad)" stroke="#2c150c" stroke-width="7"/>
+  <ellipse cx="328" cy="111" rx="20" ry="33" fill="url(#sausageGrad)" stroke="#2c150c" stroke-width="7"/>
+  <path d="M115 95 C150 88 250 88 285 95" fill="none" stroke="#e88a63" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- mustard zigzag -->
+  <path d="M78 100 L110 118 L140 100 L170 118 L200 100 L230 118 L260 100 L290 118 L322 100"
+        fill="none" stroke="#f9d020" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M78 100 L110 118 L140 100 L170 118 L200 100 L230 118 L260 100 L290 118 L322 100"
+        fill="none" stroke="#171310" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity="0" />
+
+  <!-- cheese drips -->
+  <path d="M120 142 L128 168 L138 142 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M190 146 L198 176 L208 146 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M262 142 L270 168 L280 142 Z" fill="#ffe08a" stroke="#3a2210" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- corn flecks -->
+  <circle cx="140" cy="176" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="230" cy="180" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+  <circle cx="180" cy="188" r="5" fill="#f9d020" stroke="#171310" stroke-width="2"/>
+</svg>

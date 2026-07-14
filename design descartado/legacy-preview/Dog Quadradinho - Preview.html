@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dog Quadradinho — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== DOG QUADRADINHO — Preview ===== */
+
+:root {
+  --mostarda: #f2a900;
+  --mostarda-dark: #d4900a;
+  --vermelho: #d62828;
+  --vermelho-dark: #a81f1f;
+  --creme: #fff6e5;
+  --creme-2: #fdecc8;
+  --carvao: #241812;
+  --carvao-2: #3a2618;
+  --texto: #2c1c10;
+  --texto-dim: #6b5644;
+  --linha: rgba(44, 28, 16, 0.1);
+  --branco: #ffffff;
+  --title-font: 'Baloo 2', sans-serif;
+  --body-font: 'Poppins', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--creme);
+  color: var(--texto);
+  font-family: var(--body-font);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; border: none; }
+
+.container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+h1, h2, h3, h4 { font-family: var(--title-font); }
+
+/* ===== PREVIEW BANNER ===== */
+.preview-banner {
+  position: relative;
+  z-index: 200;
+  background: var(--carvao);
+  color: var(--mostarda);
+  text-align: center;
+  padding: 9px 20px;
+  font-size: 11.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ===== CHECKER PATTERN HELPERS ===== */
+.checker {
+  background-image:
+    linear-gradient(45deg, var(--carvao) 25%, transparent 25%, transparent 75%, var(--carvao) 75%),
+    linear-gradient(45deg, var(--carvao) 25%, transparent 25%, transparent 75%, var(--carvao) 75%);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
+}
+
+.checker-strip {
+  height: 14px;
+  width: 100%;
+  background-image:
+    linear-gradient(45deg, var(--carvao) 25%, transparent 25%, transparent 75%, var(--carvao) 75%),
+    linear-gradient(45deg, var(--carvao) 25%, transparent 25%, transparent 75%, var(--carvao) 75%);
+  background-size: 14px 14px;
+  background-position: 0 0, 7px 7px;
+  background-color: var(--creme-2);
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: rgba(255, 246, 229, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 3px solid var(--carvao);
+  transition: padding 0.25s ease;
+}
+
+.nav.scrolled { padding: 10px 32px; }
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--title-font);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--carvao);
+  cursor: pointer;
+}
+
+.nav__logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--vermelho);
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  transform: rotate(-6deg);
+  transition: transform 0.3s ease;
+}
+
+.nav__logo:hover .nav__logo-mark { transform: rotate(6deg) scale(1.08); }
+
+.nav__logo-mark::before,
+.nav__logo-mark::after {
+  content: '';
+  position: absolute;
+  background: var(--mostarda);
+}
+
+.nav__logo-mark::before { inset: 6px 6px auto auto; width: 12px; height: 12px; top: 4px; left: 4px; border-radius: 3px; }
+.nav__logo-mark::after { width: 12px; height: 12px; bottom: 4px; right: 4px; border-radius: 3px; background: var(--creme); }
+
+.nav__logo span { color: var(--vermelho); }
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.nav__links a {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--texto-dim);
+  transition: color 0.25s;
+  position: relative;
+}
+
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 3px;
+  background: var(--mostarda);
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.nav__links a:hover { color: var(--texto); }
+.nav__links a:hover::after { width: 100%; }
+
+.nav__cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--vermelho);
+  color: var(--creme);
+  padding: 11px 20px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 0 var(--vermelho-dark);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nav__cta:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--vermelho-dark); }
+.nav__cta:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--vermelho-dark); }
+
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  padding: 6px;
+}
+
+.nav__burger span {
+  width: 24px;
+  height: 3px;
+  background: var(--carvao);
+  border-radius: 2px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  padding: 90px 32px 70px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(242, 169, 0, 0.28), transparent 45%),
+    radial-gradient(circle at 10% 85%, rgba(214, 40, 40, 0.14), transparent 40%);
+  z-index: 0;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--carvao);
+  color: var(--mostarda);
+  padding: 7px 16px;
+  border-radius: 40px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.hero__eyebrow .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7ed957;
+  animation: pulseDot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.06;
+  font-weight: 800;
+  color: var(--carvao);
+  margin-bottom: 20px;
+}
+
+.hero h1 .hl {
+  color: var(--vermelho);
+  position: relative;
+  display: inline-block;
+}
+
+.hero h1 .hl::after {
+  content: '';
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: 6px;
+  height: 14px;
+  background: var(--mostarda);
+  z-index: -1;
+  border-radius: 3px;
+  opacity: 0.55;
+}
+
+.hero p.lead {
+  font-size: 17px;
+  color: var(--texto-dim);
+  max-width: 480px;
+  margin-bottom: 34px;
+  line-height: 1.6;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 15px 26px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn--primary {
+  background: var(--vermelho);
+  color: var(--creme);
+  box-shadow: 0 5px 0 var(--vermelho-dark);
+}
+
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--vermelho-dark); }
+.btn--primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--vermelho-dark); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--carvao);
+  border: 2.5px solid var(--carvao);
+}
+
+.btn--ghost:hover { background: var(--carvao); color: var(--creme); transform: translateY(-2px); }
+
+.hero__stats {
+  display: flex;
+  gap: 30px;
+}
+
+.hero__stats div strong {
+  display: block;
+  font-family: var(--title-font);
+  font-size: 26px;
+  color: var(--carvao);
+}
+
+.hero__stats div span {
+  font-size: 12.5px;
+  color: var(--texto-dim);
+}
+
+/* ===== HERO VISUAL ===== */
+.hero__visual {
+  position: relative;
+  height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plate {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: var(--branco);
+  box-shadow: 0 30px 60px rgba(44, 28, 16, 0.25), inset 0 0 0 10px var(--creme-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: floatPlate 5s ease-in-out infinite;
+}
+
+@keyframes floatPlate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+
+.hotdog {
+  position: relative;
+  width: 250px;
+  height: 96px;
+}
+
+.hotdog__bun {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f3c568, #d99a34);
+  border-radius: 48px;
+}
+
+.hotdog__sausage {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 22px;
+  height: 52px;
+  background: linear-gradient(180deg, #c94a3b, #a52f22);
+  border-radius: 26px;
+  box-shadow: inset 0 -6px 10px rgba(0,0,0,0.15);
+}
+
+.hotdog__mustard {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 34px;
+  height: 10px;
+  background: var(--mostarda);
+  border-radius: 10px;
+  clip-path: polygon(0% 50%, 5% 0%, 10% 50%, 15% 0%, 20% 50%, 25% 0%, 30% 50%, 35% 0%, 40% 50%, 45% 0%, 50% 50%, 55% 0%, 60% 50%, 65% 0%, 70% 50%, 75% 0%, 80% 50%, 85% 0%, 90% 50%, 95% 0%, 100% 50%, 100% 100%, 0% 100%);
+}
+
+.steam {
+  position: absolute;
+  bottom: 100%;
+  width: 8px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.75);
+  filter: blur(3px);
+  animation: steamRise 2.6s ease-in infinite;
+  opacity: 0;
+}
+
+.steam:nth-child(1) { left: 30%; animation-delay: 0s; }
+.steam:nth-child(2) { left: 50%; animation-delay: 0.7s; }
+.steam:nth-child(3) { left: 68%; animation-delay: 1.4s; }
+
+@keyframes steamRise {
+  0% { transform: translateY(0) translateX(0) scaleX(1); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateY(-70px) translateX(10px) scaleX(1.6); opacity: 0; }
+}
+
+.crumb {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--mostarda);
+}
+
+.crumb--1 { width: 14px; height: 14px; top: 18%; right: 8%; animation: floatSlow 4s ease-in-out infinite; }
+.crumb--2 { width: 10px; height: 10px; bottom: 14%; left: 6%; background: var(--vermelho); animation: floatSlow 3.4s ease-in-out infinite 0.5s; }
+.crumb--3 { width: 18px; height: 18px; bottom: 22%; right: 2%; background: var(--carvao); opacity: 0.15; animation: floatSlow 5s ease-in-out infinite 0.2s; }
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+/* ===== MARQUEE ===== */
+.marquee {
+  background: var(--carvao);
+  overflow: hidden;
+  padding: 14px 0;
+  border-top: 3px solid var(--mostarda);
+  border-bottom: 3px solid var(--mostarda);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: scrollMarquee 22s linear infinite;
+}
+
+.marquee__track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--title-font);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--mostarda);
+  padding: 0 26px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.marquee__track span::after { content: '✦'; color: var(--vermelho); font-size: 12px; }
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== SECTION SHARED ===== */
+section { padding: 100px 0; position: relative; }
+
+.section__head {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 56px;
+}
+
+.section__eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--vermelho);
+  margin-bottom: 10px;
+}
+
+.section__head h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--carvao);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.section__head p {
+  margin-top: 14px;
+  color: var(--texto-dim);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MENU ===== */
+.menu {
+  background: var(--creme-2);
+}
+
+.menu__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.menu__card {
+  background: var(--branco);
+  border-radius: 20px;
+  padding: 26px 22px 24px;
+  border: 3px solid var(--carvao);
+  box-shadow: 6px 6px 0 var(--carvao);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+.menu__card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 var(--carvao);
+}
+
+.menu__card.featured {
+  background: var(--vermelho);
+  color: var(--creme);
+}
+
+.menu__tag {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  background: var(--mostarda);
+  color: var(--carvao);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 2px solid var(--carvao);
+  text-transform: uppercase;
+}
+
+.menu__icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: var(--creme-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin-bottom: 18px;
+  transform: rotate(-4deg);
+  transition: transform 0.25s ease;
+}
+
+.menu__card.featured .menu__icon { background: rgba(255,255,255,0.16); }
+.menu__card:hover .menu__icon { transform: rotate(4deg) scale(1.08); }
+
+.menu__card h3 {
+  font-size: 19px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.menu__card p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  opacity: 0.8;
+  margin-bottom: 18px;
+  min-height: 62px;
+}
+
+.menu__price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 2px dashed rgba(44,28,16,0.18);
+  padding-top: 14px;
+}
+
+.menu__card.featured .menu__price { border-top-color: rgba(255,255,255,0.3); }
+
+.menu__price strong {
+  font-family: var(--title-font);
+  font-size: 22px;
+}
+
+.menu__price span {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.65;
+}
+
+/* ===== DIFERENCIAIS ===== */
+.diferenciais__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.dif__card {
+  text-align: center;
+  padding: 34px 20px;
+}
+
+.dif__icon {
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 18px;
+  border-radius: 22px;
+  background: var(--mostarda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  transition: transform 0.3s ease;
+  transform: rotate(-8deg);
+}
+
+.dif__card:nth-child(2) .dif__icon { background: var(--vermelho); transform: rotate(6deg); }
+.dif__card:nth-child(3) .dif__icon { background: var(--carvao); transform: rotate(-6deg); }
+.dif__card:nth-child(4) .dif__icon { background: var(--mostarda); transform: rotate(8deg); }
+
+.dif__card:hover .dif__icon { transform: rotate(0deg) scale(1.1); }
+
+.dif__card h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+  color: var(--carvao);
+}
+
+.dif__card p {
+  font-size: 13.5px;
+  color: var(--texto-dim);
+  line-height: 1.55;
+}
+
+/* ===== SOBRE ===== */
+.sobre {
+  background: var(--carvao);
+  color: var(--creme);
+  overflow: hidden;
+}
+
+.sobre__inner {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.sobre__visual {
+  position: relative;
+  height: 340px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.sobre__visual .checker {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+}
+
+.sobre__visual::after {
+  content: '🌭';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 120px;
+  filter: drop-shadow(0 12px 20px rgba(0,0,0,0.4));
+  animation: floatSlow 4.5s ease-in-out infinite;
+}
+
+.sobre__text .section__eyebrow { color: var(--mostarda); }
+
+.sobre__text h2 {
+  font-size: clamp(26px, 3.6vw, 36px);
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+
+.sobre__text p {
+  color: rgba(255,246,229,0.75);
+  line-height: 1.7;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.sobre__list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sobre__list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14.5px;
+}
+
+.sobre__list li .check {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--mostarda);
+  color: var(--carvao);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* ===== DEPOIMENTOS ===== */
+.depoimentos__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.dep__card {
+  background: var(--branco);
+  border-radius: 18px;
+  padding: 28px 24px;
+  border: 1px solid var(--linha);
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+.dep__card:hover { transform: translateY(-6px); }
+
+.dep__stars { color: var(--mostarda); font-size: 15px; margin-bottom: 14px; letter-spacing: 2px; }
+
+.dep__card p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--texto-dim);
+  margin-bottom: 20px;
+}
+
+.dep__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dep__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--mostarda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--title-font);
+  font-weight: 700;
+  color: var(--carvao);
+  font-size: 15px;
+}
+
+.dep__author strong { display: block; font-size: 13.5px; color: var(--carvao); }
+.dep__author span { font-size: 12px; color: var(--texto-dim); }
+
+/* ===== LOCALIZAÇÃO ===== */
+.local {
+  background: var(--creme-2);
+}
+
+.local__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.local__map {
+  border-radius: 20px;
+  border: 3px solid var(--carvao);
+  background:
+    linear-gradient(135deg, var(--mostarda) 0%, var(--mostarda) 100%);
+  position: relative;
+  min-height: 320px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.local__map .checker { position: absolute; inset: 0; opacity: 0.12; }
+
+.local__pin {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: var(--vermelho);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  animation: pinBounce 2.4s ease-in-out infinite;
+}
+
+.local__pin span { transform: rotate(45deg); font-size: 22px; }
+
+@keyframes pinBounce {
+  0%, 100% { transform: rotate(-45deg) translateY(0); }
+  50% { transform: rotate(-45deg) translateY(-10px); }
+}
+
+.local__card {
+  background: var(--branco);
+  border-radius: 20px;
+  padding: 34px;
+  border: 3px solid var(--carvao);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+}
+
+.local__row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.local__row .ic {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--creme-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.local__row strong { display: block; font-size: 14.5px; color: var(--carvao); margin-bottom: 3px; }
+.local__row span, .local__row p { font-size: 13.5px; color: var(--texto-dim); line-height: 1.5; }
+
+/* ===== CTA FINAL ===== */
+.cta-final {
+  background: var(--vermelho);
+  color: var(--creme);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.cta-final::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 120%, rgba(242,169,0,0.35), transparent 60%);
+}
+
+.cta-final__inner { position: relative; z-index: 1; }
+
+.cta-final h2 {
+  font-size: clamp(28px, 4.4vw, 44px);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.cta-final p {
+  font-size: 15.5px;
+  opacity: 0.85;
+  max-width: 480px;
+  margin: 0 auto 34px;
+}
+
+.cta-final .btn--primary {
+  background: var(--mostarda);
+  color: var(--carvao);
+  box-shadow: 0 5px 0 var(--mostarda-dark);
+}
+
+.cta-final .btn--primary:hover { box-shadow: 0 7px 0 var(--mostarda-dark); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--carvao);
+  color: rgba(255,246,229,0.6);
+  padding: 46px 0 30px;
+}
+
+.footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(255,246,229,0.12);
+  margin-bottom: 22px;
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--title-font);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--creme);
+}
+
+.footer__social {
+  display: flex;
+  gap: 12px;
+}
+
+.footer__social a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,246,229,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.footer__social a:hover { background: var(--mostarda); color: var(--carvao); transform: translateY(-3px); }
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ===== WHATSAPP FLOAT ===== */
+.wa-float {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45);
+  z-index: 150;
+  animation: waPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes waPulse {
+  0%, 100% { box-shadow: 0 8px 20px rgba(37, 211, 102, 0.45); }
+  50% { box-shadow: 0 8px 26px rgba(37, 211, 102, 0.75), 0 0 0 8px rgba(37, 211, 102, 0.12); }
+}
+
+/* ===== SCROLL PROGRESS ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--mostarda), var(--vermelho));
+  z-index: 300;
+  box-shadow: 0 0 10px rgba(214, 40, 40, 0.5);
+}
+
+/* ===== IDLE WIGGLE (logo) ===== */
+@keyframes wiggleLogo {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(-1deg); }
+}
+
+.nav__logo-mark { animation: wiggleLogo 3.2s ease-in-out infinite; }
+.nav__logo:hover .nav__logo-mark { animation-play-state: paused; }
+
+/* ===== CONFETTI SQUARES (hero) ===== */
+.confetti-sq {
+  position: absolute;
+  border-radius: 4px;
+  pointer-events: none;
+  animation: confettiFloat 4s ease-in-out infinite;
+}
+
+@keyframes confettiFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-22px) rotate(calc(var(--r, 0deg) + 25deg)); }
+}
+
+/* ===== STAGGERED REVEAL ===== */
+.reveal { transition-delay: var(--d, 0s); }
+
+/* ===== MENU CARD TILT ===== */
+.menu__card { transform-style: preserve-3d; will-change: transform; transition: transform 0.12s ease, box-shadow 0.25s ease; }
+
+/* ===== BUTTON SHINE SWEEP ===== */
+.btn--primary { position: relative; overflow: hidden; }
+
+.btn--primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateX(-160%) skewX(-20deg);
+  animation: shineSweep 3.2s ease-in-out infinite;
+  animation-delay: 1.2s;
+  pointer-events: none;
+}
+
+@keyframes shineSweep {
+  0% { transform: translateX(-160%) skewX(-20deg); }
+  35%, 100% { transform: translateX(320%) skewX(-20deg); }
+}
+
+/* ===== PING RINGS ===== */
+.ping-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  animation: pingRingAnim 2.2s ease-out infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ping-ring--2 { animation-delay: 1.1s; }
+
+@keyframes pingRingAnim {
+  0% { transform: scale(0.85); opacity: 0.55; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* ===== IDLE ICON FLOAT (diferenciais) ===== */
+.dif__icon {
+  --r: -8deg;
+  transform: rotate(var(--r));
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+.dif__card:nth-child(2) .dif__icon { --r: 6deg; animation-delay: 0.3s; }
+.dif__card:nth-child(3) .dif__icon { --r: -6deg; animation-delay: 0.6s; }
+.dif__card:nth-child(4) .dif__icon { --r: 8deg; animation-delay: 0.9s; }
+
+.dif__card:hover .dif__icon {
+  animation-play-state: paused;
+  transform: rotate(0deg) scale(1.1);
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: rotate(var(--r)) translateY(0); }
+  50% { transform: rotate(var(--r)) translateY(-8px); }
+}
+
+/* ===== SOBRE LIST POP-IN ===== */
+.sobre__list li {
+  opacity: 0;
+  animation: popIn 0.5s ease forwards;
+  animation-play-state: paused;
+}
+
+.sobre__list.in li { animation-play-state: running; }
+.sobre__list.in li:nth-child(1) { animation-delay: 0.1s; }
+.sobre__list.in li:nth-child(2) { animation-delay: 0.3s; }
+.sobre__list.in li:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes popIn {
+  0% { opacity: 0; transform: translateX(-14px) scale(0.92); }
+  60% { opacity: 1; transform: translateX(2px) scale(1.03); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* ===== TESTIMONIAL STARS ===== */
+.dep__stars span {
+  display: inline-block;
+  opacity: 0;
+  animation: starPop 0.4s ease forwards;
+  animation-play-state: paused;
+}
+
+.dep__card.in .dep__stars span { animation-play-state: running; }
+.dep__card.in .dep__stars span:nth-child(1) { animation-delay: 0.05s; }
+.dep__card.in .dep__stars span:nth-child(2) { animation-delay: 0.15s; }
+.dep__card.in .dep__stars span:nth-child(3) { animation-delay: 0.25s; }
+.dep__card.in .dep__stars span:nth-child(4) { animation-delay: 0.35s; }
+.dep__card.in .dep__stars span:nth-child(5) { animation-delay: 0.45s; }
+
+@keyframes starPop {
+  0% { opacity: 0; transform: scale(0) rotate(-40deg); }
+  70% { opacity: 1; transform: scale(1.25) rotate(8deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* ===== MARQUEE HOVER SLOW ===== */
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* ===== PRICE COUNT-UP TARGET ===== */
+.menu__price strong { display: inline-block; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 980px) {
+  .hero__inner { grid-template-columns: 1fr; }
+  .hero__visual { height: 320px; }
+  .menu__grid { grid-template-columns: repeat(2, 1fr); }
+  .diferenciais__grid { grid-template-columns: repeat(2, 1fr); }
+  .sobre__inner { grid-template-columns: 1fr; }
+  .depoimentos__grid { grid-template-columns: 1fr; }
+  .local__inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav__links, .nav__cta { display: none; }
+  .nav__burger { display: flex; }
+  .menu__grid { grid-template-columns: 1fr; }
+  .diferenciais__grid { grid-template-columns: 1fr; }
+  .hero__stats { flex-wrap: wrap; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-banner">Preview — Dog Quadradinho · versão de demonstração</div>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav__logo">
+    <span class="nav__logo-mark"></span>
+    Dog <span>Quadradinho</span>
+  </div>
+  <ul class="nav__links">
+    <li><a href="#cardapio" class="nav-link">Cardápio</a></li>
+    <li><a href="#sobre" class="nav-link">Sobre</a></li>
+    <li><a href="#diferenciais" class="nav-link">Diferenciais</a></li>
+    <li><a href="#local" class="nav-link">Localização</a></li>
+  </ul>
+  <a href="#" class="nav__cta">📲 Pedir no Zap</a>
+  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <div class="hero__eyebrow"><span class="dot"></span> Aberto agora · pedidos no WhatsApp</div>
+      <h1>O hot dog <span class="hl">quadradinho</span> que vira parada obrigatória</h1>
+      <p class="lead">Pão na chapa, recheio generoso e aquele toque artesanal cortado certinho, do nosso jeito. Feito na hora, na sua esquina.</p>
+      <div class="hero__actions">
+        <a href="#cardapio" class="btn btn--primary">🌭 Ver cardápio</a>
+        <a href="#local" class="btn btn--ghost">📍 Onde estamos</a>
+      </div>
+      <div class="hero__stats">
+        <div><strong>5★</strong><span>avaliação média</span></div>
+        <div><strong>+2mil</strong><span>dogs entregues</span></div>
+        <div><strong>15min</strong><span>tempo médio</span></div>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="plate">
+        <div class="hotdog">
+          <div class="steam"></div>
+          <div class="steam"></div>
+          <div class="steam"></div>
+          <div class="hotdog__bun"></div>
+          <div class="hotdog__sausage"></div>
+          <div class="hotdog__mustard"></div>
+        </div>
+      </div>
+      <span class="crumb crumb--1"></span>
+      <span class="crumb crumb--2"></span>
+      <span class="crumb crumb--3"></span>
+      <span class="confetti-sq" style="top:12%; left:8%; width:14px; height:14px; background:var(--vermelho); --r:12deg; animation-delay:0s;"></span>
+      <span class="confetti-sq" style="top:70%; left:4%; width:10px; height:10px; background:var(--carvao); opacity:0.4; --r:-20deg; animation-delay:0.6s;"></span>
+      <span class="confetti-sq" style="top:8%; right:6%; width:12px; height:12px; background:var(--mostarda); --r:30deg; animation-delay:1.1s;"></span>
+      <span class="confetti-sq" style="bottom:10%; right:10%; width:16px; height:16px; background:var(--vermelho); opacity:0.5; --r:-10deg; animation-delay:1.7s;"></span>
+      <span class="confetti-sq" style="top:40%; right:2%; width:9px; height:9px; background:var(--carvao); opacity:0.3; --r:15deg; animation-delay:0.3s;"></span>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee__track" id="marqueeTrack">
+    <span>Pão na chapa</span>
+    <span>Mostarda artesanal</span>
+    <span>Batata crocante</span>
+    <span>Recheio generoso</span>
+    <span>Feito na hora</span>
+    <span>Peça já no zap</span>
+    <span>Pão na chapa</span>
+    <span>Mostarda artesanal</span>
+    <span>Batata crocante</span>
+    <span>Recheio generoso</span>
+    <span>Feito na hora</span>
+    <span>Peça já no zap</span>
+  </div>
+</div>
+
+<section class="menu" id="cardapio">
+  <div class="container">
+    <div class="section__head reveal">
+      <span class="section__eyebrow">Cardápio</span>
+      <h2>Escolha o seu quadradinho</h2>
+      <p>Combinações pensadas pra quem gosta de sabor de verdade, sem enrolação.</p>
+    </div>
+    <div class="menu__grid">
+      <div class="menu__card reveal">
+        <div class="menu__icon">🌭</div>
+        <h3>Clássico</h3>
+        <p>Pão macio, salsicha especial, molho da casa, milho e batata palha.</p>
+        <div class="menu__price"><strong data-price="14">R$ 0</strong><span>unidade</span></div>
+      </div>
+      <div class="menu__card featured reveal">
+        <div class="menu__tag">Mais pedido</div>
+        <div class="menu__icon">🔥</div>
+        <h3>Quadradinho Especial</h3>
+        <p>Duas salsichas, bacon crocante, cheddar cremoso e cebola caramelizada.</p>
+        <div class="menu__price"><strong data-price="19">R$ 0</strong><span>unidade</span></div>
+      </div>
+      <div class="menu__card reveal">
+        <div class="menu__icon">🌶️</div>
+        <h3>Turbo Apimentado</h3>
+        <p>Molho picante da casa, jalapeño, catupiry e crispy de cebola.</p>
+        <div class="menu__price"><strong data-price="18">R$ 0</strong><span>unidade</span></div>
+      </div>
+      <div class="menu__card reveal">
+        <div class="menu__icon">🥤</div>
+        <h3>Combo Completo</h3>
+        <p>Um dog clássico, refrigerante gelado e batata frita crocante.</p>
+        <div class="menu__price"><strong data-price="24">R$ 0</strong><span>combo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="diferenciais" id="diferenciais">
+  <div class="container">
+    <div class="section__head reveal">
+      <span class="section__eyebrow">Por que a gente</span>
+      <h2>Diferenciais que valem o desvio de rota</h2>
+    </div>
+    <div class="diferenciais__grid">
+      <div class="dif__card reveal">
+        <div class="dif__icon">⚡</div>
+        <h3>Rápido de verdade</h3>
+        <p>Chapa quente o dia todo, dog pronto em minutos.</p>
+      </div>
+      <div class="dif__card reveal">
+        <div class="dif__icon">🧑‍🍳</div>
+        <h3>Receita própria</h3>
+        <p>Molhos e mostarda feitos artesanalmente, sem industrializado.</p>
+      </div>
+      <div class="dif__card reveal">
+        <div class="dif__icon">💳</div>
+        <h3>Pix, cartão e dinheiro</h3>
+        <p>Paga do jeito que for mais fácil pra você.</p>
+      </div>
+      <div class="dif__card reveal">
+        <div class="dif__icon">📲</div>
+        <h3>Peça pelo Zap</h3>
+        <p>Sem app, sem complicação. Manda mensagem e já garante o seu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="container sobre__inner">
+    <div class="sobre__visual reveal">
+      <div class="checker"></div>
+    </div>
+    <div class="sobre__text reveal">
+      <span class="section__eyebrow">Nossa história</span>
+      <h2>Uma banquinha, uma paixão por hot dog bem feito</h2>
+      <p>Começou pequeno, numa esquina, com a ideia simples de fazer o melhor hot dog do bairro. Hoje o Dog Quadradinho é ponto de encontro de quem não abre mão de um lanche caprichado.</p>
+      <p>Cada detalhe é pensado: do corte certinho ao equilíbrio dos recheios, do calor do pão à generosidade do molho.</p>
+      <ul class="sobre__list reveal">
+        <li><span class="check">✓</span> Ingredientes selecionados todos os dias</li>
+        <li><span class="check">✓</span> Montagem na hora, do seu jeito</li>
+        <li><span class="check">✓</span> Atendimento rápido e de sorriso no rosto</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="depoimentos">
+  <div class="container">
+    <div class="section__head reveal">
+      <span class="section__eyebrow">Quem já provou</span>
+      <h2>O que a galera fala da gente</h2>
+    </div>
+    <div class="depoimentos__grid">
+      <div class="dep__card reveal">
+        <div class="dep__stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p>"Melhor hot dog da região, sem dúvida. O especial com bacon é surreal."</p>
+        <div class="dep__author">
+          <div class="dep__avatar">M</div>
+          <div><strong>Marcos T.</strong><span>Cliente fiel</span></div>
+        </div>
+      </div>
+      <div class="dep__card reveal">
+        <div class="dep__stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p>"Peço toda semana pelo WhatsApp, chega rapidinho e sempre quentinho."</p>
+        <div class="dep__author">
+          <div class="dep__avatar">J</div>
+          <div><strong>Juliana R.</strong><span>Cliente fiel</span></div>
+        </div>
+      </div>
+      <div class="dep__card reveal">
+        <div class="dep__stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p>"O molho da casa é outro nível. Virou parada obrigatória depois do trabalho."</p>
+        <div class="dep__author">
+          <div class="dep__avatar">P</div>
+          <div><strong>Pedro A.</strong><span>Cliente fiel</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="local" id="local">
+  <div class="container local__inner">
+    <div class="local__map reveal">
+      <div class="checker"></div>
+      <div class="local__pin"><span class="ping-ring" style="color: var(--vermelho);"></span><span class="ping-ring ping-ring--2" style="color: var(--vermelho);"></span><span>🌭</span></div>
+    </div>
+    <div class="local__card reveal">
+      <div class="local__row">
+        <div class="ic">📍</div>
+        <div><strong>Endereço</strong><span>[Preencher endereço da banquinha]</span></div>
+      </div>
+      <div class="local__row">
+        <div class="ic">🕒</div>
+        <div>
+          <strong>Horário de funcionamento</strong>
+          <p>Terça a domingo, 18h às 23h</p>
+        </div>
+      </div>
+      <div class="local__row">
+        <div class="ic">📞</div>
+        <div><strong>WhatsApp</strong><span>[Preencher número de contato]</span></div>
+      </div>
+      <a href="#" class="btn btn--primary" style="align-self: flex-start; margin-top: 6px;">📲 Chamar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container cta-final__inner">
+    <h2>Bateu a fome? Chama a gente.</h2>
+    <p>Peça agora pelo WhatsApp e receba seu quadradinho quentinho em minutos.</p>
+    <a href="#" class="btn btn--primary">📲 Pedir agora</a>
+  </div>
+</section>
+
+<div class="checker-strip"></div>
+
+<footer>
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__logo">
+        <span class="nav__logo-mark"></span>
+        Dog Quadradinho
+      </div>
+      <div class="footer__social">
+        <a href="#" aria-label="Instagram">📷</a>
+        <a href="#" aria-label="WhatsApp">📲</a>
+        <a href="#" aria-label="Facebook">📘</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Dog Quadradinho. Todos os direitos reservados.</span>
+      <span>Feito com 🌭 e mostarda artesanal</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#" class="wa-float" aria-label="WhatsApp">
+  <span class="ping-ring" style="color: #25d366;"></span>
+  📲
+</a>
+
+<script>
+// Nav scroll shrink
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Scroll progress bar
+const scrollProgress = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  scrollProgress.style.width = scrolled + '%';
+});
+
+// Staggered scroll reveal (cascade by position within each grid)
+const grids = document.querySelectorAll('.menu__grid, .diferenciais__grid, .depoimentos__grid');
+grids.forEach(grid => {
+  [...grid.children].forEach((child, i) => {
+    child.style.setProperty('--d', (i * 0.1) + 's');
+  });
+});
+
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+
+      // count-up prices inside this element
+      entry.target.querySelectorAll('[data-price]').forEach(el => {
+        const target = parseInt(el.getAttribute('data-price'), 10);
+        let current = 0;
+        const step = Math.max(1, Math.round(target / 20));
+        const tick = () => {
+          current = Math.min(target, current + step);
+          el.textContent = 'R$ ' + current;
+          if (current < target) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => observer.observe(el));
+
+// 3D tilt on menu cards
+document.querySelectorAll('.menu__card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y / rect.height) - 0.5) * -12;
+    const rotateY = ((x / rect.width) - 0.5) * 12;
+    card.style.transform = `translate(-4px, -4px) perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// Parallax hero visual follows cursor (plate keeps its own float animation as a child)
+const heroSection = document.querySelector('.hero');
+const heroVisual = document.querySelector('.hero__visual');
+if (heroSection && heroVisual) {
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 24;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 24;
+    heroVisual.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  heroSection.addEventListener('mouseleave', () => {
+    heroVisual.style.transform = '';
+  });
+}
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 120;
+    if (window.scrollY >= top) current = sec.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+// Smooth anchor scroll
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const targetId = link.getAttribute('href');
+    if (targetId.length > 1) {
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

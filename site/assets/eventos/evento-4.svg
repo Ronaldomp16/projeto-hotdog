@@ -1,0 +1,32 @@
+<svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="280" fill="#fff8f0"/>
+  <rect y="150" width="400" height="130" fill="#e0983a"/>
+  <rect y="150" width="400" height="14" fill="#c9791f"/>
+
+  <!-- toalha detalhe -->
+  <g stroke="#c9791f" stroke-width="2" opacity="0.5">
+    <line x1="0" y1="190" x2="400" y2="190"/>
+    <line x1="0" y1="230" x2="400" y2="230"/>
+  </g>
+
+  <!-- bandejas -->
+  <g>
+    <ellipse cx="90" cy="150" rx="60" ry="16" fill="#fff8f0" stroke="#3a2210" stroke-width="3"/>
+    <g transform="translate(60,128)">
+      <rect x="0" y="10" width="60" height="16" rx="8" fill="#e0983a" stroke="#3a2210" stroke-width="3"/>
+      <rect x="8" y="6" width="44" height="12" rx="6" fill="#a83726" stroke="#2c150c" stroke-width="3"/>
+      <path d="M12 8 L22 14 L32 8 L42 14" fill="none" stroke="#f9d020" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <ellipse cx="200" cy="146" rx="46" ry="14" fill="#fff8f0" stroke="#3a2210" stroke-width="3"/>
+    <circle cx="200" cy="140" r="16" fill="#8b3fd1" stroke="#5a2789" stroke-width="3"/>
+    <circle cx="192" cy="134" r="4" fill="#b678f2"/>
+
+    <ellipse cx="310" cy="150" rx="55" ry="15" fill="#fff8f0" stroke="#3a2210" stroke-width="3"/>
+    <rect x="286" y="130" width="14" height="24" rx="4" fill="#e67014" stroke="#a8500f" stroke-width="2"/>
+    <rect x="304" y="126" width="14" height="28" rx="4" fill="#f4ff2a" stroke="#c9c200" stroke-width="2"/>
+    <rect x="322" y="132" width="14" height="22" rx="4" fill="#fff8f0" stroke="#c9b8a0" stroke-width="2"/>
+  </g>
+
+  <ellipse cx="200" cy="272" rx="180" ry="6" fill="#000" opacity="0.1"/>
+</svg>

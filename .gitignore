@@ -1,0 +1,18 @@
+# dependências e build artifacts do design descartado (React/Vite)
+design descartado/node_modules
+design descartado/dist
+design descartado/dist-whatsapp
+design descartado/.vite
+
+# cache local do wrangler
+.wrangler
+
+# prints gerados pelo validar-responsivo.js (não fazem parte do site)
+_validacao-*.png
+
+# sistema operacional / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea

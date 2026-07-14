@@ -1,0 +1,12 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# CSP: o site é uma página única com CSS/JS 100% inline por design (ver template.html/build.mjs),
+# por isso script-src/style-src precisam de 'unsafe-inline'. Único CSS externo é o Google Fonts,
+# e o único iframe é o embed do OpenStreetMap (seção Nossas Unidades). Todas as imagens são
+# data: URIs embutidas no build, não há chamadas fetch/XHR (o pedido só abre um link wa.me).
+/
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.openstreetmap.org; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cupGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2b95c"/>
+      <stop offset="100%" stop-color="#e0983a"/>
+    </linearGradient>
+    <linearGradient id="juiceGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a83726"/>
+      <stop offset="100%" stop-color="#7a2418"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="228" rx="72" ry="12" fill="#000" opacity="0.14"/>
+  <path d="M138 76 L262 76 L242 216 C242 228 220 236 200 236 C180 236 158 228 158 216 Z"
+        fill="url(#cupGrad)" stroke="#3a2210" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M152 108 L248 108 L232 200 C232 210 216 216 200 216 C184 216 168 210 168 200 Z"
+        fill="url(#juiceGrad)" opacity="0.92"/>
+  <ellipse cx="200" cy="76" rx="62" ry="12" fill="#ffe6b0" stroke="#3a2210" stroke-width="6"/>
+  <path d="M212 60 C224 40 244 34 254 46" fill="none" stroke="#3a2210" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="256" cy="42" r="7" fill="#e6683a" stroke="#3a2210" stroke-width="4"/>
+</svg>
