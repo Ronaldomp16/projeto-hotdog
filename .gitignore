@@ -7,6 +7,9 @@ design descartado/.vite
 # cache local do wrangler
 .wrangler
 
+# cópia amigável pra mandar por WhatsApp/e-mail — não é necessária pro site rodar
+Dog Quadradinho - Versão Oficial.html
+
 # prints gerados pelo validar-responsivo.js (não fazem parte do site)
 _validacao-*.png
 
